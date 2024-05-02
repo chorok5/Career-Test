@@ -1,15 +1,22 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="app">
+    <MenuPage/>
+    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <router-view/>
+    <Footer />
+    
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Footer from './components/common/AppFooter.vue'; //import 풋터 추가
+import MenuPage from './components/MenuPage.vue';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    Footer,
+    MenuPage
   }
 }
 </script>
