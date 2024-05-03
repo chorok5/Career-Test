@@ -29,7 +29,6 @@ export default {
 
 <style scoped>
 .career-module-container {
-  /* 컨테이너 스타일 */
 }
 
 .career-item {
@@ -49,7 +48,7 @@ export default {
 }
 
 .career-item-button {
-  margin-top: auto; /* 상단 여백을 자동으로 설정하여 버튼을 컨테이너 아래로 이동시킵니다. */
-  text-align: right; /* 버튼을 우측 정렬합니다. */
+  margin-top: auto; 
+  text-align: right; 
 }
 </style>
