@@ -16,26 +16,38 @@ import lombok.Data;
 @Table(name = "test_results")
 @Data
 public class ResultData {   
-    
-    public ResultData() {
-        this.personalTraits = new ArrayList<>();
-        this.recommendedJobs = new ArrayList<>();
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long rid;
 
+    private String category;
+    
     private String title; // 결과 제목
 
+    private String recommendedJobs;
+    
+    
+    @ElementCollection
+    private List<String> personalTraits = new ArrayList<>();
+    
     @Column(columnDefinition = "TEXT")
     private String description; // 결과 설명
 
-    @ElementCollection
-    private List<String> recommendedJobs; // 추천 직업 리스트
+    private int totalScore; // 총점
 
-    @ElementCollection
-    private List<String> personalTraits; // 성향 리스트
- 
-    
+    public int getTotalScore() {
+        return totalScore;
+    }
+
+    public void setTotalScore(int totalScore) {
+        this.totalScore = totalScore;
+    }
+
+    public void setPersonalTraits(List<String> personalTraits) {
+        this.personalTraits = personalTraits;
+    }
+
 }
+
+    

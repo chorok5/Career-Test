@@ -23,15 +23,15 @@ public class TestAnswer {
 
     @Column(name = "sid")
     private Integer sid;
+    
+    @Column(name = "tcategory")
+    private String tcategory;
 
     @Column(name = "ttitle")
     private String ttitle;
 
-    @Column(name = "tquest")
-    private String tquest;
-
-    @Column(name = "tresult")
-    private String tresult;
+    @Column(name = "tanswer")
+    private String tanswer;
 	
 }
 

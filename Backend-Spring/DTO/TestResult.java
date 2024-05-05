@@ -24,8 +24,14 @@ public class TestResult {
     @Column(name = "tid")
     private Integer tid;
 
-    @Column(name = "tscore")
-    private Integer tscore;
+    @Column(name = "result_description") // 결과 설명 컬럼
+    private String resultDescription;
+
+    @Column(name = "job") // 추천 직업 컬럼
+    private String job;
+
+    @Column(name = "trait") // 성향 컬럼
+    private String trait;
 
     @Column(name = "tdate")
     private LocalDateTime tdate;
