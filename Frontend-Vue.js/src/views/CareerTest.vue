@@ -9,8 +9,12 @@
           :name="'question-' + index"
           :value="option.value"
           v-model="userAnswers[index]"
+          :checked="userAnswers[index] === option.value"
+          id="option{{ index }}{{ optionIndex }}"
         />
-        <label>{{ option.label }}</label>
+        <label :for="'option' + index + optionIndex" @click="selectOption(index, option.value)">
+          {{ option.label }}
+        </label>
       </div>
     </div>
     <button @click="submitTest">완료</button>
@@ -22,40 +26,92 @@ import axios from 'axios';
 
 export default {
   data() {
-    return {
-      questions: [
-        {
-          title: "당신은 어떤 유형의 사람이라고 생각하십니까?",
-          options: [
-            { label: "외향적", value: "extrovert" },
-            { label: "내향적", value: "introvert" }
-          ]
+  return {
+    questions: [
+      {
+        category: "새로운 환경에 대한 적응성",
+        title: "새로운 상황에 대한 적응이 빠른 편인가요?",
+        options: [
+        { label: "그렇다", value: 3 }, { label: "보통이다", value: 2},{ label: "아니다", value: 1}
+        ]
+      },
+      {
+        category: "사회적 활동 선호도",
+        title: "다른 사람들과의 상호 작용 및 활동에 대한 선호도는 높은 편인가요?",
+        options: [
+        { label: "그렇다", value: 3 }, { label: "보통이다", value: 2},{ label: "아니다", value: 1}
+        ]
+      },
+      {
+        category: "독립적 업무 선호도",
+        title: "여러 사람이 같이 일하는 것을 선호하시나요?",
+        options: [
+        { label: "그렇다", value: 3 }, { label: "보통이다", value: 2},{ label: "아니다", value: 1}
+        ]
+      },
+      {
+        category: "자기 계발에 대한 관심",
+        title: "자기 계발 및 학습에 대한 관심이 많은가요?",
+        options: [
+        { label: "그렇다", value: 3 }, { label: "보통이다", value: 2},{ label: "아니다", value: 1}
+        ]
+      },
+      {
+        category: "팀 프로젝트 참여 선호도",
+        title: "팀 프로젝트에 참여하는 것을 선호하십니까?",
+        options: [
+        { label: "그렇다", value: 3 }, { label: "보통이다", value: 2},{ label: "아니다", value: 1}
+        ]
+      },
+      {
+        category: "고도의 스트레스 관리 능력",
+        title: "고도의 스트레스를 관리하고 대처하는 능력이 있나요?",
+        options: [
+        { label: "그렇다", value: 3 }, { label: "보통이다", value: 2},{ label: "아니다", value: 1}
+        ]
+      },
+      {
+        category: "빠른 의사 결정 능력",
+        title: "빠른 시간 내에 의사 결정을 내릴 수 있는 능력이 있나요?",
+        options: [
+        { label: "그렇다", value: 3 }, { label: "보통이다", value: 2},{ label: "아니다", value: 1}
+        ]
+      },
+      {
+        category: "문제 해결능력",
+        title: "문제 해결능력을 갖추고 있나요?",
+        options: [
+        { label: "그렇다", value: 3 }, { label: "보통이다", value: 2},{ label: "아니다", value: 1}
+        ]
+      },
+      {
+        category: "창의성 및 혁신성",
+        title: "창의적인 생각과 혁신적인 아이디어를 개발하는 것을 선호하나요?",
+        options: [
+        { label: "그렇다", value: 3 }, { label: "보통이다", value: 2},{ label: "아니다", value: 1}
+        ]
+      },
+      {
+        category: "업무에 대한 열정",
+        title: "해당 분야의 업무에 대한 열정이 있나요?",
+        options: [
+          { label: "그렇다", value: 3 }, { label: "보통이다", value: 2},{ label: "아니다", value: 1}
+        ]
         },
-        {
-          title: "새로운 상황에 적응하는 것에 어려움을 느끼십니까?",
-          options: [
-            { label: "네, 어려움을 느낍니다", value: "difficulty_adapting" },
-            { label: "아니오, 적응하는 데 문제가 없습니다", value: "no_difficulty_adapting" }
-          ]
-        },
-        {
-          title: "팀 프로젝트를 좋아하십니까?",
-          options: [
-            { label: "네, 좋아합니다", value: "likes_teamwork" },
-            { label: "아니오, 선호하지 않습니다", value: "dislikes_teamwork" }
-          ]
-        }
       ],
       userAnswers: []
     };
   },
   methods: {
+    selectOption(index, value) {
+      // 라디오 버튼의 값을 선택된 값으로 설정
+      this.userAnswers[index] = value;
+    },
     submitTest() {
-      console.log("Submit test button 클릭됨");
+      // console.log("Submit test button 클릭됨");
       axios.post('/api/submitTest', this.userAnswers)
         .then(response => {
           console.log(response.data);
-          // 결과 페이지로 이동합니다.
           this.$router.push({ name: 'ResultPage', query: { userAnswers: this.userAnswers } });
         })
         .catch(error => {
