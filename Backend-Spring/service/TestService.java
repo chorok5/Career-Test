@@ -4,8 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.kidwiz.web.DTO.TestAnswer;
+import com.kidwiz.web.DTO.TestQuestion;
 import com.kidwiz.web.DTO.TestResult;
-import com.kidwiz.web.controller.TestAnswer;
 import com.kidwiz.web.repository.TestRepository;
 import com.kidwiz.web.repository.TestResultRepository;
 
@@ -27,4 +28,10 @@ public class TestService {
     public void saveTestResult(TestResult testResult) {
         testResultRepository.save(testResult);
     }
+
+    
+    @Transactional
+	public void saveTestQuestion(TestQuestion testQuestion) {
+    	testResultRepository.save(testQuestion);
+	}
 }
