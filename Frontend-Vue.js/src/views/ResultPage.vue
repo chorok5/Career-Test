@@ -13,10 +13,14 @@
       </ul>
       <h3>당신의 성향</h3>
       <ul>
-        <li v-for="trait in result.personalTraits" :key="trait">
-          {{ trait }}
+        <li v-for="(trait, index) in result.personalTraits" :key="index">
+          <strong>{{ traitTitles[index] }}:</strong>
+          <ul>
+            <li>{{ trait }}</li>
+          </ul>
         </li>
       </ul>
+
       <div class="action-buttons">
         <button @click="retakeTest">다시 검사하기</button>
         <button @click="shareResult">결과 공유하기</button>
@@ -38,8 +42,9 @@ export default {
         description: '',
         recommendedJobs: '',
         personalTraits: [],
-        totalScore: 0 // 총점 초기값 추가
-      }
+        totalScore: 0
+      },
+      traitTitles: ['외향성 여부 분석', '대인관계 성향 분석', '문제 해결 능력 성향 분석']
     };
   },
   created() {
