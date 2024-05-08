@@ -2,7 +2,9 @@ package com.kidwiz.web.controller;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,8 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kidwiz.web.DTO.ResultData;
-import com.kidwiz.web.DTO.TestAnswer;
-import com.kidwiz.web.DTO.TestQuestion;
 import com.kidwiz.web.DTO.TestResult;
 import com.kidwiz.web.service.TestService;
 
@@ -24,82 +24,94 @@ public class TestController {
 	@Autowired
 	TestService testService;
 
-	@Autowired
-	TestResult testResult;
-	
+	// submitTest에서는 int로 qid, tanswer를 받아옴.
 	@PostMapping("/submitTest")
-	public ResponseEntity<ResultData> submitTest(@RequestBody List<String> answers) {
-	    // 1. 답변 데이터로 심리검사 결과를 계산하거나 분석함.
-		int totalScore = calculateTotalScore(answers);
-	    ResultData result = analyzeAnswers(answers, totalScore);
+	public ResponseEntity<ResultData> submitTest(@RequestBody List<Integer> questionData) {
+		List<TestResult> testResults = new ArrayList<>();
+
+		int[] questionScores = new int[questionData.size()]; // 각 질문에 대한 점수를 저장할 배열
+
+		
+	    //int totalScore = 0;
+	    for (int i = 0; i < questionData.size(); i++) {
+	        Integer answer = questionData.get(i);
+	        if (answer != null) {
+	        	// 현재 질문에 대한 점수를 현재 인덱스에 누적
+	            questionScores[i] += answer;
+	            
+	            // 각 답변마다 qid와 함께 TestResult 객체를 생성하여 저장
+	            TestResult testResult = new TestResult();
+	            testResult.setQid(i + 1); // 질문의 인덱스를 qid로 설정
+	            testResult.setTanswer(answer);
+	            testResult.setPersonalTraits(getPersonalTraits(questionScores[i])); // List<String>
+	            testResult.setRecommendedJobs(getRecommendedJobs(questionScores[i])); // String
+	            testResult.setTotalScore(questionScores[i]); // totalScore 설정
+	            testResult.setTdate(LocalDateTime.now()); // 현재 날짜와 시간 설정
+	            testResults.add(testResult); // TestResult 객체 리스트에 추가
+	        }
+	    }
+	    testService.saveTestResults(testResults);
 	    
-	    // 2. 데이터베이스에 질문과 답변을 저장.
-	    saveTestQuestion(answers); // 질문 저장
-	    saveTestAnswer(answers); // 답변 저장
-	    saveTestResult(result, totalScore); // 결과 저장
+	    // 마지막 질문까지의 총 점수를 계산하여 반환
+	    int totalScore = Arrays.stream(questionScores).sum();
 	    
-	    // 3. 클라이언트에게 응답을 보냄.
-	    return ResponseEntity.ok(result);
+	    ResultData result = new ResultData(); // ResultData 객체 생성
+        String recommendedJobs = getRecommendedJobs(totalScore);
+        List<String> personalTraits = getPersonalTraits(totalScore);
+        result.setTotalScore(totalScore);
+        result.setRecommendedJobs(recommendedJobs);
+        result.setPersonalTraits(personalTraits);
+        
+	    return ResponseEntity.ok(result); // 클라이언트에게 응답을 보냄.
 	}
-
-	private void saveTestQuestion(List<String> answers) { // 필요한 다른 데이터 설정 = qid, sid, tid
-	    TestQuestion testQuestion = new TestQuestion();
-	    testQuestion.setTcategory("카테고리 값");
-	    testQuestion.setTtitle("질문 내용 값");
-	    testService.saveTestQuestion(testQuestion);
-	}
-
-	private void saveTestAnswer(List<String> answers) {
-	    TestAnswer testAnswer = new TestAnswer();
-	    testAnswer.setTanswer(String.join(",", answers));
-	    testAnswer.setTdate(LocalDateTime.now());
-	    testService.saveTest(testAnswer);
-	}
-
-	private void saveTestResult(ResultData result, int totalScore) {
-	    TestResult testResult = new TestResult();
-	    // testResult.setSid(userId); // 사용자 ID 설정
-	    // testResult.setTid(testAnswer.getTid()); // 질문 ID 설정
-	    testResult.setRecommendedJobs(result.getRecommendedJobs());
-	    testResult.setPersonalTraits(String.join(",", result.getPersonalTraits()));
-	    testResult.setTotalScore(totalScore);
-	    testResult.setTdate(LocalDateTime.now());
-	    testService.saveTestResult(testResult);
-	}
-
+	
+	// getTestResult에서는 String으로 컨트롤러에 있는 직업,성향을 저장함.
 	@PostMapping("/getTestResult")
 	public ResponseEntity<ResultData> getTestResult(@RequestBody List<String> answers) {
-		int totalScore = calculateTotalScore(answers);
-	    ResultData result = analyzeAnswers(answers, totalScore); 
-		result.setTotalScore(totalScore);
-		return ResponseEntity.ok(result);
+	    // 문자열 리스트를 정수 리스트로 변환
+	    List<Integer> intAnswers = new ArrayList<>();
+	    for (String answer : answers) {
+	        if (answer != null && !answer.isEmpty()) {
+	            try {
+	                intAnswers.add(Integer.parseInt(answer));
+	            } catch (NumberFormatException e) {
+	                // 정수로 변환할 수 없는 문자열이 포함된 경우 처리
+	                // 예외가 발생해도 계속해서 다음 값들을 처리하도록 continue 사용
+	                continue;
+	            }
+	        }
+	    }
+	    // 문자열 리스트를 그대로 결과로 사용
+	    int totalScore = calculateTotalScore(intAnswers);
+	    ResultData result = generateResultData(totalScore);
+	    return ResponseEntity.ok(result);
 	}
+	
+    private ResultData generateResultData(int totalScore) {
+        ResultData result = new ResultData();
+        String recommendedJobs = getRecommendedJobs(totalScore);
+        List<String> personalTraits = getPersonalTraits(totalScore);
+        result.setTotalScore(totalScore);
+        result.setRecommendedJobs(recommendedJobs);
+        result.setPersonalTraits(personalTraits);
+        return result;
+    }
 
-	private ResultData analyzeAnswers(List<String> answers, int totalScore) {
-		ResultData resultData = new ResultData();
-
-		// 사용자 답변 분석
-	    String recommendedJobs = getRecommendedJobs(totalScore);
-	    List<String> personalTraits = getPersonalTraits(totalScore);
-		resultData.setRecommendedJobs(recommendedJobs);
-		resultData.setPersonalTraits(personalTraits);
-		return resultData;
+	
+	private int calculateTotalScore(List<Integer> answers) {
+	    int totalScore = 0;
+	    for (Integer answer : answers) {
+	        if (answer != null) {
+	            // 답변이 null이 아닌 경우에만 점수를 계산하도록 수정
+	            totalScore += answer; // 이미 정수이므로 변환할 필요 없음
+	        } else {
+	            // 답변이 null인 경우에는 점수를 계산하지 않음
+	            System.out.println("답변이 null입니다.");
+	        }
+	    }
+	    return totalScore;
 	}
-
-	private int calculateTotalScore(List<String> answers) {
-		int totalScore = 0;
-		for (String answer : answers) {
-			try {
-				int score = Integer.parseInt(answer);
-				totalScore += score; // value가 정수로 주어지므로, 직접 점수에 더합니다.
-			} catch (NumberFormatException e) {
-				// answer가 정수로 파싱될 수 없는 경우, 예외 처리
-				System.out.println("답변이 올바른 숫자 형식이 아닙니다: " + answer);
-			}
-		}
-		return totalScore;
-	}
-
+	
 	private String getRecommendedJobs(int totalScore) {
 		if (totalScore >= 25) {
 			return "프로젝트 매니저, 인사 담당자, 커뮤니케이션 전문가 등";
@@ -145,9 +157,6 @@ public class TestController {
 	    } else {
 	        personalTraits.add("초보적인 문제 해결 능력을 갖추고 있음. 문제 해결에 어려움을 겪을 수 있음. 도움과 지원을 통해 능력을 키울 수 있음");
 	    }
-
 	    return personalTraits;
 	}
-
-
 }
