@@ -64,7 +64,7 @@ export default {
       this.$router.push('/CareerTest');
     },
     shareResult() {
-      // 결과 공유 기능 구현
+      // 결과 공유 기능 구현 나중에
     }
 
   }
