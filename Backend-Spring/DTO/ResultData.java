@@ -10,12 +10,13 @@ import lombok.Data;
 @Data
 
 public class ResultData {
-    private String tcategory;
-    private String ttitle;
+	
+	private List<String> answers;
+    
+	private int totalScore;
     private String recommendedJobs;
     private List<String> personalTraits;
-    private String description;
-    private int totalScore;
-    private LocalDateTime tdate;
     
+    private LocalDateTime tdate;
+
 }
