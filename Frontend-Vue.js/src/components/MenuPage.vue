@@ -1,15 +1,17 @@
 <template>
   <header>
     <nav class="nav">
-        <li><router-link to="/testVue">테스트뷰</router-link></li>
-        <li><router-link to="/listTest">DB테스트</router-link></li>
-        <li><router-link to="/BoardList">박선우</router-link></li>
-        <li><router-link to="/insertTest">insert 테스트</router-link></li>
-        <li><router-link to="/PersonTest">person 테스트</router-link></li>
-        <li><router-link to="/CareerTest">심리검사</router-link></li>
+      <li><router-link to="/">Home</router-link></li>
+      <li><router-link to="/counseling">심리상담 안내</router-link></li>
+      <li><router-link to="/counselorshow">상담사 소개</router-link></li>
+      <li><router-link to="/test">Test</router-link></li>
+      <li><router-link to="/offlinesubmit">오프라인 상담 신청</router-link></li>
+      <li><router-link to="/faq">FAQ</router-link></li>
+      <li><router-link to="/contact">Contact</router-link></li>
     </nav>
   </header>
 </template>
+
 
 <script>
 export default {
