@@ -1,27 +1,70 @@
-import { createRouter, createWebHistory } from "vue-router";
-import testVue from "@/views/TestVue.vue";
-import listTest from "@/views/ListTest.vue";
-import Boardwrite from "@/views/BoardWrite.vue";
-import insertTest from "@/views/insertTest.vue";
-import PersonTest from "@/views/PersonTest.vue";
-import CareerTest from "@/views/CareerTest.vue";
-import ResultPage from "@/views/ResultPage.vue";
-
-const routes = [
-    { path: '/testVue', name: 'testVue', component: testVue },
-    { path: '/listTest', name: 'listTest', component: listTest },
-    { path: '/BoardList', name: 'BoardList', component: () => import('../views/BoardList.vue') },
-    { path: '/BoardWrite', name: 'BoardWrite', component: Boardwrite },
-    { path: '/insertTest', name: 'insertTest', component: insertTest },
-    { path: '/PersonTest', name: 'PersonTest', component: PersonTest },
-    { path: '/CareerTest', name: 'CareerTest', component: CareerTest },
-    { path: '/ResultPage', name: 'ResultPage', component: ResultPage }
-];
-
+import { createRouter, createWebHistory } from 'vue-router';
+import SimriMain from '@/views/SimriMain.vue';
+import ContactMap from '@/views/contactFolder/ContactMap.vue';
+import CounselingIntro from '@/views/counselingFolder/CounselingIntro.vue';
+import CounselorShow from '@/views/counselorShow/CounselorShow.vue';
+import FAQQuestion from '@/views/faqFolder/FAQQuestion.vue';
+import CareerTest from '@/views/testFolder/CareerTest.vue';
+import PersonTest from '@/views/testFolder/PersonTest.vue';
+import ResultPage from '@/views/testFolder/ResultPage.vue';
+import OfflineSubmit from '@/views/submitFolder/OfflineSubmit.vue';
 
 const router = createRouter({
-    history: createWebHistory(process.env.BASE_URL),
-    routes
+  history: createWebHistory(process.env.BASE_URL),
+  routes: [
+    {
+      path: '/',
+      name: 'SimriMain',
+      component: SimriMain,
+    },
+    {
+      path: '/contact',
+      name: 'Contact',
+      component: ContactMap,
+    },
+    {
+      path: '/counseling',
+      name: 'Counseling',
+      component: CounselingIntro,
+    },
+    {
+        path: '/counselorshow',
+        name: 'CounselorShow',
+        component: CounselorShow,
+    },
+    {
+      path: '/faq',
+      name: 'FAQ',
+      component: FAQQuestion,
+    },
+    {
+        path: '/offlineSubmit',
+        name: 'OfflineSubmit',
+        component: OfflineSubmit,
+      },
+    {
+      path: '/test',
+      name: 'Test',
+      component: CareerTest,
+      children: [
+        {
+          path: 'career',
+          name: 'CareerTest',
+          component: CareerTest,
+        },
+        {
+          path: 'person',
+          name: 'PersonTest',
+          component: PersonTest,
+        },
+        {
+          path: 'result',
+          name: 'ResultPage',
+          component: ResultPage,
+        },
+      ],
+    },
+  ],
 });
 
-export default router
+export default router;
