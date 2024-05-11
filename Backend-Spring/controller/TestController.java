@@ -2,7 +2,6 @@ package com.kidwiz.web.controller;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,21 +26,14 @@ public class TestController {
 	@PostMapping("/submitTest")
 	public ResponseEntity<ResultData> submitTest(@RequestBody List<Integer> questionData) {
 	    List<TestResult> testResults = new ArrayList<>();
-	    int[] questionScores = new int[questionData.size()];
 	    int totalScore = 0;
-
 	    for (int i = 0; i < questionData.size(); i++) {
 	        Integer answer = questionData.get(i);
 	        if (answer != null) {
-	            // 현재 질문에 대한 점수를 현재 인덱스에 저장
-	            questionScores[i] = answer;
-
 	            // 각 답변마다 qid와 함께 TestResult 객체를 생성하여 저장
 	            TestResult testResult = new TestResult();
 	            testResult.setQid(i + 1); // 질문의 인덱스를 qid로 설정
 	            testResult.setTanswer(answer);
-	            testResult.setPersonalTraits(getPersonalTraits(answer)); // List<String>
-	            testResult.setRecommendedJobs(getRecommendedJobs(answer)); // String
 	            testResult.setTotalScore(answer); // 각 질문의 점수를 totalScore로 설정
 	            testResult.setTdate(LocalDateTime.now()); // 현재 날짜와 시간 설정
 	            testResults.add(testResult); // TestResult 객체 리스트에 추가
@@ -51,26 +43,11 @@ public class TestController {
 	        }
 	    }
 
-	    // 추천 직업 및 성향 설정
-	    String recommendedJobs = getRecommendedJobs(totalScore);
-	    List<String> personalTraits = getPersonalTraits(totalScore);
-
-	    // TestResult 객체에 추천 직업 및 성향 설정
-	    for (TestResult testResult : testResults) {
-	        testResult.setRecommendedJobs(recommendedJobs);
-	        testResult.setPersonalTraits(personalTraits);
-	    }
-
 	    testService.saveTestResults(testResults);
 
-	 // qid 11번에 대한 TestResult 생성 및 저장
-	    TestResult finalResult = new TestResult();
-	    finalResult.setQid(11); // qid 11번으로 설정
-	    finalResult.setTotalScore(totalScore); // 총 점수 설정
-	    finalResult.setRecommendedJobs(getRecommendedJobs(totalScore)); // 추천 직업 설정
-	    finalResult.setPersonalTraits(getPersonalTraits(totalScore)); // 개인 성향 설정
-	    finalResult.setTdate(LocalDateTime.now()); // 현재 날짜와 시간 설정
-	    testService.saveTestResult(finalResult);
+	    // 추천 직업 및 성향 계산
+	    String recommendedJobs = getRecommendedJobs(totalScore);
+	    List<String> personalTraits = getPersonalTraits(totalScore);
 
 	    ResultData result = new ResultData(); // ResultData 객체 생성
 	    result.setTotalScore(totalScore);
@@ -80,7 +57,6 @@ public class TestController {
 	    return ResponseEntity.ok(result); // 클라이언트에게 응답을 보냄.
 	}
 
-	
 	
 	// getTestResult에서는 String으로 컨트롤러에 있는 직업,성향을 저장함.
 	@PostMapping("/getTestResult")
@@ -106,11 +82,6 @@ public class TestController {
 	
     private ResultData generateResultData(int totalScore) {
         ResultData result = new ResultData();
-        String recommendedJobs = getRecommendedJobs(totalScore);
-        List<String> personalTraits = getPersonalTraits(totalScore);
-        result.setTotalScore(totalScore);
-        result.setRecommendedJobs(recommendedJobs);
-        result.setPersonalTraits(personalTraits);
         return result;
     }
 
