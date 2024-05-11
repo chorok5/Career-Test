@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.kidwiz.web.DTO.TestResult;
 
 
-public interface TestResultRepository extends JpaRepository<TestResult, Long> {
+public interface TestResultRepository extends JpaRepository<TestResult, Integer> {
 
 	void save(List<TestResult> testResults);
 }
