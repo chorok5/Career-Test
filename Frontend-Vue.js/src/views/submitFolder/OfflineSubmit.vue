@@ -1,6 +1,6 @@
 <template>
     <div class="container mt-5">
-        <h2>오프라인 상담 신청</h2>
+        <h2>오프라인 검사 신청</h2>
         <form @submit.prevent="submitForm">
             <!-- 이름 -->
             <div class="mb-3 row">

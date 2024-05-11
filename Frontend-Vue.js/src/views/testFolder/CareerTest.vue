@@ -1,18 +1,18 @@
 <template>
   <div class="container">
     <h1 class="text-center mt-5 mb-4">심리검사</h1>
-    <div v-for="(question, index) in questions" :key="index" class="card mb-4">
+    <div v-for="(question, index) in questions" :key="question.qid" class="card mb-4">
       <div class="card-body" v-if="index !== 10">
         <h3 class="card-title">{{ question.ttitle }}</h3>
         <div class="form-check d-flex flex-row flex-wrap" v-for="(option, optionIndex) in question.options" :key="optionIndex">
-          <input type="radio" :name="'question-' + index" :value="parseInt(option.value)" v-model="userAnswers[index]" class="form-check-input" :id="'option' + index + optionIndex" />
-          <label :for="'option' + index + optionIndex" class="form-check-label mr-3">{{ option.label }}</label>
+          <input type="radio" :name="'question-' + question.qid" :value="option.value" v-model="userAnswers[question.qid]" class="form-check-input" :id="'option' + question.qid + '-' + optionIndex" />
+          <label :for="'option' + question.qid + '-' + optionIndex" class="form-check-label mr-3">{{ option.label }}</label>
         </div>
       </div>
     </div>
-    <!-- qid 11번 출력 -->
-    <div class="card mb-4">
-      <div class="card-body" v-if="result.totalScore !== null"> <!-- 결과 값이 있을 때만 출력 -->
+    <!-- 결과 출력 -->
+    <div class="card mb-4" v-if="result.totalScore !== null">
+      <div class="card-body">
         <h3 class="card-title">최종 결과</h3>
         <p>총 점수: {{ result.totalScore }}</p>
         <p>추천 직업: {{ result.recommendedJobs }}</p>
@@ -111,14 +111,8 @@ export default {
             { label: "그렇다", value: 3 }, { label: "보통이다", value: 2 }, { label: "아니다", value: 1 }
           ]
         },
-        {
-          qid: 11,
-          tcategory: "최종 결과", // 카테고리 이름은 마음대로 설정 가능
-          ttitle: "최종 결과",
-          options: [] // 선택지가 없는 행으로 설정
-        }
       ],
-      userAnswers: [],
+      userAnswers: {},
       result: {
         totalScore: null,
         recommendedJobs: "",
@@ -126,53 +120,47 @@ export default {
       }
     };
   },
-  mounted() {
-    // 컴포넌트가 생성될 때 질문 데이터 로드
-    this.initializeQuestions();
+  created() {
+    this.fetchQuestions();
   },
   methods: {
-    initializeQuestions() {
+    fetchQuestions() {
       axios.get('/api/questions')
         .then(response => {
           this.questions = response.data;
-          this.userAnswers = Array(this.questions.length).fill(null); // 질문 개수만큼 userAnswers 배열 생성
+          this.initializeAnswers();
         })
         .catch(error => {
           console.error('Error fetching questions:', error);
         });
     },
-    selectOption(index, value) {
-      if (value === null) {
-        this.userAnswers[index] = null;
-      } else {
-        this.userAnswers[index] = parseInt(value);
-      }
+    initializeAnswers() {
+      this.questions.forEach(question => {
+        this.$set(this.userAnswers, question.qid, null); // Vue.set을 사용하여 리액티브하게 userAnswers 초기화
+      });
     },
     submitTest() {
-      // 모든 응답이 제출되었는지 확인
-      console.log(this.userAnswers);
-      const isAllAnswered = this.userAnswers.every(answer => answer !== null);
+      const isAllAnswered = Object.values(this.userAnswers).every(answer => answer !== null);
       if (!isAllAnswered) {
         alert("모든 질문에 답해주세요.");
-        return; // 모든 질문에 답하지 않았다면 여기서 함수 종료
+        return;
       }
-
-            axios.post('/api/submitTest', this.userAnswers)
+        
+      // this.userAnswers를 배열로 변환
+       const answersArray = Object.values(this.userAnswers);
+  
+      axios.post('/api/submitTest', answersArray)
         .then(response => {
-          console.log(response.data);
-          // 백엔드로부터 받은 데이터를 result 객체에 설정
-          this.result.totalScore = response.data.totalScore;
-          this.result.recommendedJobs = response.data.recommendedJobs;
-          this.result.personalTraits = response.data.personalTraits;
-          // Vue Router를 사용하여 다음 페이지로 이동
-          this.$router.push({ name: 'ResultPage', query: { userAnswers: this.userAnswers } });
+          this.result = response.data;
+          this.$router.push({ name: 'ResultPage', params: { result: JSON.stringify(this.result) } });
+
         })
         .catch(error => {
           console.error('Error submitting test:', error);
         });
     }
   }
-}
+};
 </script>
 
 
