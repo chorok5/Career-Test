@@ -19,10 +19,7 @@ import lombok.Data;
 @Component
 @Table(name = "test_results")
 @Comment("심리검사 결과 테이블(tno=테스트no, sid=학번)")
-// @IdClass(PrimaryKeys.class)
 public class TestResult {
-	
-	// private List<Integer> answers;
 	
     @Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)	
@@ -41,14 +38,6 @@ public class TestResult {
 	@Comment("응답 value")
 	private Integer tanswer;
     
-    @Column(name = "recommended_jobs")
-    @Comment("추천 직업")
-    private String recommendedJobs;
-
-    @Column(name = "personal_traits")
-    @Comment("성향")
-    private String personalTraits;
-
     @Column(name = "total_score", nullable = false)
     @Comment("총점")
     private int totalScore;
@@ -56,17 +45,5 @@ public class TestResult {
     @Column(name = "tdate")
     @Comment("검사 실시일")
     private LocalDateTime tdate;
-
-    public void setPersonalTraits(List<String> personalTraitsList) {
-        if (personalTraitsList != null && !personalTraitsList.isEmpty()) {
-            this.personalTraits = String.join(", ", personalTraitsList);
-        }
-    }
-
-    public void setRecommendedJobs(String string) {
-        if (string != null && !string.isEmpty()) {
-            this.recommendedJobs = String.join(", ", string);
-        }
-    }
 
 }
