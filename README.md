@@ -62,5 +62,15 @@
 
 
 <해결>
-* FaqWrite.vue의 withCredentials: true를 삭제하니 cors 오류가 해결되었는지 글이 제대로 작성되기 시작했다. 
+* FaqWrite.vue의 withCredentials: true를 삭제하니 cors 오류가 해결되었는지 글이 제대로 작성되기 시작했다.
+
+<문제3>
+* AxiosError 415 : 클라이언트와 서버 간의 응답 타입과 요청 타입이 다른 경우 발생
+
+<해결>
+```
+headers: {
+    'Content-Type': 'application/json'
+  }
+```
 
