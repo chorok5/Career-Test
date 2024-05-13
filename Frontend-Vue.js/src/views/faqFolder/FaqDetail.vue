@@ -45,7 +45,7 @@ export default {
   methods: {
     fetchQuestion() {
       const questionId = this.$route.params.id;
-      axios.get(`/api/faqquestions/${questionId}`)
+      axios.get(`http://localhost:3000/api/faqquestions/${questionId}`)
         .then(response => {
           this.question = response.data;
         })
@@ -63,7 +63,7 @@ export default {
     updateQuestion() {
       if (confirm('수정하시겠습니까?')) {
       const questionId = this.$route.params.id;
-      axios.put(`/api/faqquestions/${questionId}`, this.question)
+      axios.put(`http://localhost:3000/api/faqquestions/${questionId}`, this.question)
         .then(() => {
           console.log('Question updated successfully');
           this.isUpdating = false;
@@ -76,7 +76,7 @@ export default {
     deleteQuestion() {
       if (confirm('정말 삭제하시겠습니까?')) {
       const questionId = this.$route.params.id;
-      axios.delete(`/api/faqquestions/${questionId}`)
+      axios.delete(`http://localhost:3000/api/faqquestions/${questionId}`)
         .then(() => {
           console.log('Question deleted successfully');
           this.$router.push('/faq');

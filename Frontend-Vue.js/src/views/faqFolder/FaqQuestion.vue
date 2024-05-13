@@ -36,7 +36,7 @@ export default {
   },
   methods: {
     fetchQuestions() {
-      axios.get('/api/faqquestions')
+      axios.get('http://localhost:3000/api/faqquestions')
         .then(response => {
           this.questions = response.data;
         })

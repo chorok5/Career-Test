@@ -30,14 +30,13 @@ export default {
   },
   methods: {
     write() {
-      // 현재 시간을 ISO 형식으로 변환하여 date에 저장하지 않고, Axios 요청에서 직접 설정
-      axios.post('/api/faqquestions', {
+      axios.post('http://localhost:3000/api/faqquestions', {
         title: this.title,
         content: this.content,
         writer: this.writer,
         date: new Date().toISOString() // 현재 시간을 ISO 형식으로 설정
-      }, {
-        withCredentials: true // 인증 정보 포함
+      }, 
+      {
       })
         .then(response => {
           console.log('글쓰기 성공:', response.data);
