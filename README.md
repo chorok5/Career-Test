@@ -48,7 +48,7 @@
 
 #### ☹ axios 에러
 
-<문제>
+<문제1>
 * 백엔드 API 주소가 정확하고, 프론트에서도 정확한 주소로 보내고 있는데 계속 연결이 안 되는 에러가 생김.
 * 백엔드 포트로 들어가서 확인해봤을 때는 db 데이터가 제대로 나옴. (http://localhost:3000/api/faqquestions)
 * @CrossOrigin(origins = "*")으로 모든 출처의 요청을 허용했는데도 안 됨.
@@ -57,5 +57,10 @@
 * 팀원들과 fork로 merge하는 과정에서 무언가가 잘못되었을 수도...
 * api 주소를 처음부터 적어준다. 이렇게 = axios.get('http://localhost:3000/api/faqquestions')
 
+<문제2>
+* 게시판 글 쓰기가 갑자기 안 됨. axios 에러.
 
+
+<해결>
+* FaqWrite.vue의 withCredentials: true를 삭제하니 cors 오류가 해결되었는지 글이 제대로 작성되기 시작했다. 
 
