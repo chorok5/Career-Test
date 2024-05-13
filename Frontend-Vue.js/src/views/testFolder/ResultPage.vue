@@ -77,7 +77,6 @@ export default {
 
 .action-buttons {
   margin-top: 20px;
-  display: flex;
-  justify-content: space-between;
+  align-items: center;
 }
 </style>
