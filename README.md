@@ -47,10 +47,12 @@
 <br><br>
 
 #### ☹ axios 에러
-* 문제 :
-  백엔드 API 주소가 정확하고, 프론트에서도 정확한 주소로 보내고 있는데 계속 연결이 안 되는 에러가 생김.
-  백엔드 포트로 들어가서 확인해봤을 때는 db 데이터가 제대로 나옴. (http://localhost:3000/api/faqquestions)
-* 해결 :
-  팀원들과 fork로 merge하는 과정에서 무언가가 잘못되었을 수도...
-  api 주소를 처음부터 적어준다. 이렇게... axios.get('http://localhost:3000/api/faqquestions')
+<문제>
+* 백엔드 API 주소가 정확하고, 프론트에서도 정확한 주소로 보내고 있는데 계속 연결이 안 되는 에러가 생김.
+* 백엔드 포트로 들어가서 확인해봤을 때는 db 데이터가 제대로 나옴. (http://localhost:3000/api/faqquestions)
+<해결>
+* 팀원들과 fork로 merge하는 과정에서 무언가가 잘못되었을 수도...
+* api 주소를 처음부터 적어준다. 이렇게... axios.get('http://localhost:3000/api/faqquestions')
+
+
 
