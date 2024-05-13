@@ -52,7 +52,7 @@ export default {
   },
   methods: {
     fetchTestResult(answers) {
-      axios.post('/api/getTestResult', answers)
+      axios.post('http://localhost:3000/api/getTestResult', answers)
         .then(response => {
           this.result = response.data;
         })
@@ -61,12 +61,8 @@ export default {
         });
     },
     retakeTest() {
-      this.$router.push('/CareerTest');
-    },
-    shareResult() {
-      // 결과 공유 기능 구현 나중에
+      this.$router.push('/test/career');
     }
-
   }
 };
 </script>
