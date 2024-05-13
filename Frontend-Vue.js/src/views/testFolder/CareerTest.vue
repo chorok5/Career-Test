@@ -125,7 +125,7 @@ export default {
   },
   methods: {
     fetchQuestions() {
-      axios.get('/api/questions')
+      axios.get('http://localhost:3000/api/questions')
         .then(response => {
           this.questions = response.data;
           this.initializeAnswers();
@@ -149,7 +149,7 @@ export default {
       // this.userAnswers를 배열로 변환
        const answersArray = Object.values(this.userAnswers);
   
-      axios.post('/api/submitTest', answersArray)
+      axios.post('http://localhost:3000/api/submitTest', answersArray)
         .then(response => {
           this.result = response.data;
           this.$router.push({ name: 'ResultPage', params: { result: JSON.stringify(this.result) } });
