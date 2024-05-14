@@ -22,7 +22,6 @@ public class TestController {
 	@Autowired
 	TestService testService;
 
-	// submitTest에서는 int로 qid, tanswer를 받아옴.
 	@PostMapping("/submitTest")
 	public ResponseEntity<ResultData> submitTest(@RequestBody List<Integer> questionData) {
 	    List<TestResult> testResults = new ArrayList<>();
@@ -60,30 +59,20 @@ public class TestController {
 	
 	// getTestResult에서는 String으로 컨트롤러에 있는 직업,성향을 저장함.
 	@PostMapping("/getTestResult")
-	public ResponseEntity<ResultData> getTestResult(@RequestBody List<String> answers) {
-	    // 문자열 리스트를 정수 리스트로 변환
-	    List<Integer> intAnswers = new ArrayList<>();
-	    for (String answer : answers) {
-	        if (answer != null && !answer.isEmpty()) {
-	            try {
-	                intAnswers.add(Integer.parseInt(answer));
-	            } catch (NumberFormatException e) {
-	                // 정수로 변환할 수 없는 문자열이 포함된 경우 처리
-	                // 예외가 발생해도 계속해서 다음 값들을 처리하도록 continue 사용
-	                continue;
-	            }
-	        }
-	    }
-	    // 문자열 리스트를 그대로 결과로 사용
-	    int totalScore = calculateTotalScore(intAnswers);
+	public ResponseEntity<ResultData> getTestResult(@RequestBody List<Integer> answers) {
+	    int totalScore = calculateTotalScore(answers);
 	    ResultData result = generateResultData(totalScore);
 	    return ResponseEntity.ok(result);
 	}
+
 	
-    private ResultData generateResultData(int totalScore) {
-        ResultData result = new ResultData();
-        return result;
-    }
+	private ResultData generateResultData(int totalScore) {
+	    ResultData result = new ResultData();
+	    result.setTotalScore(totalScore);
+	    result.setRecommendedJobs(getRecommendedJobs(totalScore));
+	    result.setPersonalTraits(getPersonalTraits(totalScore));
+	    return result;
+	}
 
 	
 	private int calculateTotalScore(List<Integer> answers) {
