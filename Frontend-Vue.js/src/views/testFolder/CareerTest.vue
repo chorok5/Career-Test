@@ -4,9 +4,13 @@
     <div v-for="(question, index) in questions" :key="question.qid" class="card mb-4">
       <div class="card-body" v-if="index !== 10">
         <h3 class="card-title">{{ question.ttitle }}</h3>
-        <div class="form-check d-flex flex-row flex-wrap" v-for="(option, optionIndex) in question.options" :key="optionIndex">
-          <input type="radio" :name="'question-' + question.qid" :value="option.value" v-model="userAnswers[question.qid]" class="form-check-input" :id="'option' + question.qid + '-' + optionIndex" />
-          <label :for="'option' + question.qid + '-' + optionIndex" class="form-check-label mr-3">{{ option.label }}</label>
+        <div class="form-check d-flex flex-row flex-wrap" v-for="(option, optionIndex) in question.options"
+          :key="optionIndex">
+          <input type="radio" :name="'question-' + question.qid" :value="option.value"
+            v-model="userAnswers[question.qid]" class="form-check-input"
+            :id="'option' + question.qid + '-' + optionIndex" />
+          <label :for="'option' + question.qid + '-' + optionIndex" class="form-check-label mr-3">{{ option.label
+            }}</label>
         </div>
       </div>
     </div>
@@ -123,7 +127,7 @@ export default {
     this.fetchQuestions();
   },
   methods: {
-    fetchQuestions() { // fetchQuestions 함수 정의
+    fetchQuestions() { // fetchQuestions 함수 정의 : 서버에서 질문을 가져와서 화면에 표시함.(axios를 사용)
       axios.get('/api/questions')
         .then(response => {
           this.questions = response.data;
@@ -140,35 +144,36 @@ export default {
     submitTest() {
       console.log(this.userAnswers);
       console.log('네비게이션 전에 로그 출력');
-/*       const isAllAnswered = Object.values(this.userAnswers).every(answer => answer !== null);
-  if (!isAllAnswered) {
-    alert("모든 질문에 답해주세요.");
-    return; // 모든 질문에 답하지 않았다면 여기서 함수 종료
-  } */
-      // 사용자 응답을 배열로 변환
-      const userAnswersArray = Object.values(this.userAnswers).map(answer => parseInt(answer));
 
-      const requestData = userAnswersArray; // 배열로 변경
+      const isAllAnswered = Object.keys(this.userAnswers).length === this.questions.length;
+      if (!isAllAnswered) {
+        alert("모든 질문에 답해주세요.");
+        return; // 모든 질문에 답하지 않았다면 여기서 함수 종료
+      }
 
-  axios.post('http://localhost:3000/api/submitTest', requestData)
+      // 미응답 질문에 대한 기본값 설정 (예: 0)
+      const userAnswersArray = this.questions.map(question => {
+        return this.userAnswers[question.qid] !== null ? parseInt(this.userAnswers[question.qid]) : 0;
+      });
 
-  .then(response => {
-    console.log('Test submitted successfully:', response.data);
-    // 받은 응답 데이터에서 필요한 정보 추출
-    const { totalScore, recommendedJobs, personalTraits } = response.data;
+      console.log('test page 전송하는 데이터:', userAnswersArray);
 
-    // 받은 정보를 result 객체에 설정
-    this.result.totalScore = totalScore;
-    this.result.recommendedJobs = recommendedJobs;
-    this.result.personalTraits = personalTraits;
+      axios.post('http://localhost:3000/api/submitTest', userAnswersArray)
+        .then(response => {
+          console.log('성공적으로 제출됨:', response.data);
+          const { totalScore, recommendedJobs, personalTraits } = response.data;
 
-    // 결과 페이지로 네비게이션
-    this.$router.push({ name: 'ResultPage', query: { userAnswers: JSON.stringify(this.userAnswers) } });
-  })
-  .catch(error => {
-    console.error('Error submitting test:', error);
-  });
+          this.result.totalScore = totalScore;
+          this.result.recommendedJobs = recommendedJobs;
+          this.result.personalTraits = personalTraits;
+
+          this.$router.push({ name: 'ResultPage', query: { userAnswers: JSON.stringify(userAnswersArray) } });
+        })
+        .catch(error => {
+          console.error('Error submitting test:', error);
+        });
     }
+
   }
 }
 </script>
