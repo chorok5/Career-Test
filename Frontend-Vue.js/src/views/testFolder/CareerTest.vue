@@ -25,7 +25,6 @@
 
 <script>
 import axios from 'axios';
-
 export default {
   data() {
     return {
@@ -112,7 +111,7 @@ export default {
           ]
         },
       ],
-      userAnswers: {},
+      userAnswers: {}, // userAnswers 객체 초기화
       result: {
         totalScore: null,
         recommendedJobs: "",
@@ -124,45 +123,55 @@ export default {
     this.fetchQuestions();
   },
   methods: {
-    fetchQuestions() {
-      axios.get('http://localhost:3000/api/questions')
+    fetchQuestions() { // fetchQuestions 함수 정의
+      axios.get('/api/questions')
         .then(response => {
           this.questions = response.data;
-          this.initializeAnswers();
+          this.userAnswers = Object.fromEntries( // 질문 개수만큼 userAnswers 객체 초기화
+            this.questions.map(question => [question.qid, null])
+          );
         })
         .catch(error => {
           console.error('Error fetching questions:', error);
+          // 오류를 적절히 처리하는 코드 추가 가능
         });
     },
-    initializeAnswers() {
-      this.questions.forEach(question => {
-        this.$set(this.userAnswers, question.qid, null); // Vue.set을 사용하여 리액티브하게 userAnswers 초기화
-      });
-    },
-    submitTest() {
-      const isAllAnswered = Object.values(this.userAnswers).every(answer => answer !== null);
-      if (!isAllAnswered) {
-        alert("모든 질문에 답해주세요.");
-        return;
-      }
-        
-      // this.userAnswers를 배열로 변환
-       const answersArray = Object.values(this.userAnswers);
-  
-      axios.post('http://localhost:3000/api/submitTest', answersArray)
-        .then(response => {
-          this.result = response.data;
-          this.$router.push({ name: 'ResultPage', params: { result: JSON.stringify(this.result) } });
 
-        })
-        .catch(error => {
-          console.error('Error submitting test:', error);
-        });
+    submitTest() {
+      console.log(this.userAnswers);
+      console.log('네비게이션 전에 로그 출력');
+/*       const isAllAnswered = Object.values(this.userAnswers).every(answer => answer !== null);
+  if (!isAllAnswered) {
+    alert("모든 질문에 답해주세요.");
+    return; // 모든 질문에 답하지 않았다면 여기서 함수 종료
+  } */
+      // 사용자 응답을 배열로 변환
+      const userAnswersArray = Object.values(this.userAnswers).map(answer => parseInt(answer));
+
+      const requestData = userAnswersArray; // 배열로 변경
+
+  axios.post('http://localhost:3000/api/submitTest', requestData)
+
+  .then(response => {
+    console.log('Test submitted successfully:', response.data);
+    // 받은 응답 데이터에서 필요한 정보 추출
+    const { totalScore, recommendedJobs, personalTraits } = response.data;
+
+    // 받은 정보를 result 객체에 설정
+    this.result.totalScore = totalScore;
+    this.result.recommendedJobs = recommendedJobs;
+    this.result.personalTraits = personalTraits;
+
+    // 결과 페이지로 네비게이션
+    this.$router.push({ name: 'ResultPage', query: { userAnswers: JSON.stringify(this.userAnswers) } });
+  })
+  .catch(error => {
+    console.error('Error submitting test:', error);
+  });
     }
   }
-};
+}
 </script>
-
 
 <style lang="scss">
 .container {
