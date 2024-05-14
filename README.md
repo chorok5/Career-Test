@@ -56,14 +56,14 @@
 <해결>
 * 팀원들과 fork로 merge하는 과정에서 무언가가 잘못되었을 수도...
 * api 주소를 처음부터 적어준다. 이렇게 = axios.get('http://localhost:3000/api/faqquestions')
-
+---
 <문제2>
 * 게시판 글 쓰기가 갑자기 안 됨. axios 에러.
 
 
 <해결>
 * FaqWrite.vue의 withCredentials: true를 삭제하니 cors 오류가 해결되었는지 글이 제대로 작성되기 시작했다.
-
+---
 <문제3>
 * AxiosError 415 : 클라이언트와 서버 간의 응답 타입과 요청 타입이 다른 경우 발생
 
@@ -73,11 +73,15 @@ headers: {
     'Content-Type': 'application/json'
   }
 ```
-
+---
 
 <문제4>
 * 문제3과 비슷하게 클라이언트에서 보내는 형식을 서버에서 읽지 못한다. 계속 [object, Object]로 넘어감. 서버에서는 배열로 받고 있음.
 
 <해결>
 * 사용자 응답을 배열로 변환 JSON.stringify 사용
+ ---
+
+<문제5>
+* submitTest와 getTestResult의 총점 값이 다르게 출력된다.
 
