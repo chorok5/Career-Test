@@ -10,7 +10,6 @@
 - 검사 결과에 따른 추천 직업과 성향에 대해 알 수 있음.
 - 오프라인 검사가 필요할 시 예약할 수 있음. (달력, 시간 구현 중)
 - 자주 묻는 질문 게시판을 확인 할 수 있음. (관리자만 글 게시 가능)
-<br>
 
 ### 진행 상황
 #### 🏆 완료
@@ -26,7 +25,6 @@
 - 검사 안내, 상담사 소개, Contact
 - 모든 페이지의 css는 나중에 할 예정
 - 문서 작업 : 5/27 오전 11시까지
-
 <br>
 
 ### 기술 스택
@@ -55,9 +53,11 @@
 <div style="display: flex; flex-wrap: wrap;">
 <img src="https://img.shields.io/badge/mariaDB-1F305F?style=flat-square&logo=mariadb&logoColor=white">
 </div>
-<br><br>
+<br>
 
-#### ☹ axios 에러
+---
+
+### axios 에러 ☹
 
 <문제1>
 * 백엔드 API 주소가 정확하고, 프론트에서도 정확한 주소로 보내고 있는데 계속 연결이 안 되는 에러가 생김.
