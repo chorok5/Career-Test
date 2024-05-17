@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.kidwiz.web.DTO.FaqQuestion;
 import com.kidwiz.web.service.FaqQuestionService;
 
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/api/faqquestions")
 public class FaqQuestionController {
