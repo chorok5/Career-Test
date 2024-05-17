@@ -24,27 +24,27 @@ public class TestController {
 
     // 설문지 제출 -> 결과 생성
     @PostMapping("/submitTest")
-    public ResponseEntity<ResultData> submitTest(@RequestBody List<Integer> questionData) {
+    public ResponseEntity<ResultData> submitTest(@RequestBody ResultData resultData) {
         List<TestResult> testResults = new ArrayList<>();
         int totalScore = 0;
 
-        for (int i = 0; i < questionData.size(); i++) {
-            Integer answer = questionData.get(i);
+        // 응답 배열 가져옴
+        List<Integer> userAnswersArray = resultData.getUserAnswersArray();
+        
+        for (int i = 0; i < userAnswersArray.size(); i++) {
+            Integer answer = userAnswersArray.get(i);
             if (answer != null && answer >= 1 && answer <= 3) {
                 int score = calculateScore(answer);
+                totalScore += score;
+                
                 TestResult testResult = new TestResult();
                 testResult.setQid(i + 1);
                 testResult.setTanswer(answer);
                 testResult.setTdate(LocalDateTime.now());
+                testResult.setTotalScore(totalScore);
                 testResults.add(testResult);
-                totalScore += score;
             }
         }
-
-        if (!testResults.isEmpty()) {
-            testService.saveTestResults(testResults);
-        }
-
         ResultData result = generateResultData(totalScore);
         return ResponseEntity.ok(result);
     }
@@ -53,10 +53,6 @@ public class TestController {
     // 결과 조회
     @PostMapping("/getTestResult")
     public ResponseEntity<ResultData> getTestResult(@RequestBody List<Integer> userAnswers) {
-        if (userAnswers == null || userAnswers.isEmpty()) {
-            // 유효한 답변이 없는 경우에는 예외 처리 또는 적절한 메시지를 반환할 수 있습니다.
-            return ResponseEntity.badRequest().build();
-        }
         int totalScore = 0;
         int validAnswersCount = 0;
 
@@ -65,13 +61,10 @@ public class TestController {
                 int score = calculateScore(answer);
                 totalScore += score;
                 validAnswersCount++;
-            } else {
-                // null이거나 1~3 사이의 값이 아닌 경우에는 무시하고 다음 답변으로 넘어갑니다.
-                continue;
             }
         }
 
-        // 적어도 하나의 유효한 답변이 있는 경우에만 결과를 반환합니다.
+        // 적어도 하나의 유효한 답변이 있는 경우에만 결과를 반환
         if (validAnswersCount > 0) {
             ResultData result = generateResultData(totalScore);
             return ResponseEntity.ok(result);
@@ -84,16 +77,7 @@ public class TestController {
 
     // 답변에 따른 점수 계산
     private int calculateScore(int answer) {
-        switch (answer) {
-            case 3:
-                return 3;
-            case 2:
-                return 2;
-            case 1:
-                return 1;
-            default:
-                return 0;
-        }
+        return answer; // 응답 값이 점수와 동일하므로 그대로 반환
     }
 
     // 총점에 따른 결과 생성
@@ -102,6 +86,7 @@ public class TestController {
         result.setTotalScore(totalScore);
         result.setRecommendedJobs(getRecommendedJobs(totalScore));
         result.setPersonalTraits(getPersonalTraits(totalScore));
+        result.setTdate(LocalDateTime.now());
         return result;
     }
 
