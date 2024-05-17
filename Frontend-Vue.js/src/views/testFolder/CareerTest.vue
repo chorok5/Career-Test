@@ -151,14 +151,17 @@ export default {
         return; // 모든 질문에 답하지 않았다면 여기서 함수 종료
       }
 
-      // 미응답 질문에 대한 기본값 설정 (예: 0)
+      // 총점 계산을 위해 각 질문의 답변을 배열에 담기
       const userAnswersArray = this.questions.map(question => {
-        return this.userAnswers[question.qid] !== null ? parseInt(this.userAnswers[question.qid]) : 0;
-      });
+        return parseInt(this.userAnswers[question.qid]);
+      })
 
       console.log('test page 전송하는 데이터:', userAnswersArray);
 
-      axios.post('http://localhost:3000/api/submitTest', userAnswersArray)
+      axios.post('http://localhost:3000/api/submitTest', {
+        userAnswersArray: userAnswersArray,
+        totalScore: userAnswersArray.reduce((acc, cur) => acc + cur, 0) // 각 답변의 총합
+  })
         .then(response => {
           console.log('성공적으로 제출됨:', response.data);
           const { totalScore, recommendedJobs, personalTraits } = response.data;
