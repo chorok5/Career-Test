@@ -45,6 +45,11 @@ public class TestController {
                 testResults.add(testResult);
             }
         }
+        // 결과 데이터 저장
+        if (!testResults.isEmpty()) {
+            testService.saveTestResults(testResults);
+        }
+        
         ResultData result = generateResultData(totalScore);
         return ResponseEntity.ok(result);
     }
