@@ -1,6 +1,7 @@
 package com.kidwiz.web.DTO;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.annotations.Comment;
@@ -42,8 +43,12 @@ public class TestResult {
     @Comment("총점")
     private int totalScore;
 
+    
+    @Column(name = "member_id")
+    @Comment("회원 ID")
+    private int memberId;
+
     @Column(name = "tdate")
     @Comment("검사 실시일")
     private LocalDateTime tdate;
-
 }
