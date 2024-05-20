@@ -5,14 +5,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.kidwiz.web.DTO.ResultData;
 import com.kidwiz.web.DTO.TestResult;
+import com.kidwiz.web.service.JwtService;
 import com.kidwiz.web.service.TestService;
 
 @RestController
@@ -21,11 +26,29 @@ public class TestController {
 
     @Autowired
     TestService testService;
+    
+    @Autowired
+    private JwtService jwtService;
 
     // 설문지 제출 -> 결과 생성
     @PostMapping("/submitTest")
-    public ResponseEntity<ResultData> submitTest(@RequestBody ResultData resultData) {
-        List<TestResult> testResults = new ArrayList<>();
+    public ResponseEntity<ResultData> submitTest(@RequestBody ResultData resultData, 
+    		@CookieValue(value = "token", required = false) String token) {
+
+    	System.out.println(resultData + "토큰 submit test");
+    	System.out.println(token+"토큰입니다");
+    	
+    	 // 토큰값이 유효하지 않으면
+        if (!jwtService.isValid(token)) {
+        	System.out.println("유효하지 않은 토큰: " + token);
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
+        }
+
+        // 토큰값으로부터 id 값 추출하기
+        int memberId = jwtService.getId(token);
+        System.out.println("추출된 memberId: " + memberId);
+        
+    	List<TestResult> testResults = new ArrayList<>();
         int totalScore = 0;
 
         // 응답 배열 가져옴
@@ -39,12 +62,15 @@ public class TestController {
                 
                 TestResult testResult = new TestResult();
                 testResult.setQid(i + 1);
+                //testResult.setSid(1);
                 testResult.setTanswer(answer);
+                testResult.setMemberId(memberId);
                 testResult.setTdate(LocalDateTime.now());
                 testResult.setTotalScore(totalScore);
                 testResults.add(testResult);
             }
         }
+        
         // 결과 데이터 저장
         if (!testResults.isEmpty()) {
             testService.saveTestResults(testResults);
@@ -146,4 +172,5 @@ public class TestController {
 
         return personalTraits;
     }
+   
 }
