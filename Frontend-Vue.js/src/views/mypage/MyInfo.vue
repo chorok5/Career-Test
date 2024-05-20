@@ -12,25 +12,24 @@
             <div class="col-12 mb-4">
               <h2>개인 정보</h2>
               <form>
-                <div class="mb-3">
-                  <label for="name" class="form-label">이름</label>
-                  <input type="text" class="form-control" id="name" v-model="user.name">
+                <div class="mb-3 row">
+                  <label for="staticEmail" class="col-sm-2 col-form-label">아이디(학번) : {{ $store.state.account.id }}</label>
                 </div>
-                <div class="mb-3">
-                  <label for="email" class="form-label">이메일 주소</label>
-                  <input type="email" class="form-control" id="email" v-model="user.email">
+                <div class="mb-3 row">
+                  <label for="staticEmail" class="col-sm-2 col-form-label">이름 : {{ $store.state.account.name }}</label>
                 </div>
-                <div class="mb-3">
-                  <label for="phone" class="form-label">연락처</label>
-                  <input type="text" class="form-control" id="phone" v-model="user.phone">
+                <div class="mb-3 row">
+                  <label for="staticEmail" class="col-sm-2 col-form-label">이메일 : {{ $store.state.account.email }}</label>
                 </div>
-                <div class="mb-3">
-                  <label for="address" class="form-label">주소</label>
-                  <input type="text" class="form-control" id="address" v-model="user.address">
+                <div class="mb-3 row">
+                  <label for="staticEmail" class="col-sm-2 col-form-label">소속 : 학과정보 가져와야함////{{ $store.state.account.id }}</label>
                 </div>
-                <button type="submit" class="btn btn-primary">수정</button>
+                <div class="mb-3 row">
+                  <label for="staticEmail" class="col-sm-2 col-form-label">연락처 : 연락처 가져와야함////{{ $store.state.account.id }}</label>
+                </div>
               </form>
             </div>
+            
             <div class="col-12"><br>
               <h2>비밀번호 변경</h2>
               <form>
@@ -71,8 +70,7 @@ export default {
       user: {
         name: '',
         email: '',
-        phone: '',
-        address: ''
+        phone: ''
       },
       password: {
         current: '',

@@ -160,8 +160,7 @@ export default {
 
       axios.post('http://localhost:3000/api/submitTest', {
         userAnswersArray: userAnswersArray,
-        totalScore: userAnswersArray.reduce((acc, cur) => acc + cur, 0) // 각 답변의 총합
-  })
+        totalScore: userAnswersArray.reduce((acc, cur) => acc + cur, 0)}, { withCredentials: true }) // id값 받아오게?
         .then(response => {
           console.log('성공적으로 제출됨:', response.data);
           const { totalScore, recommendedJobs, personalTraits } = response.data;

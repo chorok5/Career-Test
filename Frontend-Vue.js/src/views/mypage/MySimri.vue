@@ -1,66 +1,80 @@
 <template>
-    <div>
-      <HeaderMenu></HeaderMenu>
-      <div class="container-fluid mt-5 pt-4">
-        <div class="row">
-          <MySidebar></MySidebar>
-
-        </div>
-      </div>
-      <Footer></Footer>
+  <div>
+    <MySidebar />
+    <div v-if="testResult">
+      <h2>테스트 결과</h2>
+      <ul>
+        <li>
+          <p>테스트 번호: {{ testResult.tno }}</p>
+          <p>SID: {{ testResult.sid }}</p>
+          <p>QID: {{ testResult.qid }}</p>
+          <p>답변: {{ testResult.tanswer }}</p>
+          <p>총 점수: {{ testResult.totalScore }}</p>
+          <p>회원 ID: {{ testResult.memberId }}</p>
+          <p>날짜: {{ formatDate(testResult.tdate) }}</p>
+        </li>
+      </ul>
     </div>
-  </template>
-  
-  <script>
-  import HeaderMenu from '@/components/HeaderMenu.vue';
-  import MySidebar from '@/components/MySidebar.vue';
-  
-  export default {
-    name: 'MySimri',
-    components: {
-      HeaderMenu,
-      MySidebar,
-    },
-    data() {
-      return {
-        isValidResult: true,
-        result: {
-          title: '심리검사 결과 제목',
-          description: '심리검사 결과 설명',
-          totalScore: 28,
-          testDate: '2024-05-18', // 심리검사 테스트 날짜
-          recommendedJobs: '의사, 엔지니어, 교사',
-          personalTraits: [
-            '친절하고 사려 깊음',
-            '논리적이고 분석적',
-            '창의적이고 예술적'
-          ]
-        },
-        traitTitles: [
-          '성격 특성 1',
-          '성격 특성 2',
-          '성격 특성 3'
-        ]
-      };
-    },
-    methods: {
-      retakeTest() {
-        // 다시 검사하기 로직 구현
-        console.log('다시 검사하기');
-      }
-    }
-  }
-  </script>
-  
-  <style scoped>
-  .container-fluid {
-    padding-top: 56px; /* Adjust based on the height of HeaderMenu */
-  }
-  .result-container {
-    margin-top: 20px;
-  }
-  .action-buttons {
-    margin-top: 20px;
-  }
-  </style>
-  
+    <div v-else>
+      <p>테스트 결과를 불러오는 중...</p>
+    </div>
+    </div>
+</template>
+
+<script>
+import axios from 'axios';
+import { ref, onMounted } from 'vue';
+import MySidebar from '@/components/MySidebar.vue';
+import { useStore } from 'vuex';
+
+export default {
+  name: 'MySimri',
+  components: {
+    MySidebar,
+  },
+
+  setup() {
+    const testResult = ref([]);
+
+    const loadTestResult = () => {
+      axios.get('http://localhost:3000/api/mysimri', { withCredentials: true })
+        .then(response => {
+          testResult.value = response.data;
+        })
+        .catch(error => {
+          console.error('Error fetching test result:', error);
+        });
+    };
+
+    const formatDate = (dateString) => {
+      const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' };
+      return new Date(dateString).toLocaleDateString('en-US', options);
+    };
+    
+    const store = useStore();
+
+    onMounted(() => {
+      loadTestResult();
+    });
+
+    return {
+      testResult,
+      formatDate,
+      store,
+    };
+  },
+};
+</script>
+
+
+<style scoped>
+.container-fluid {
+  padding-top: 56px; /* Adjust based on the height of HeaderMenu */
+}
+.result-container {
+  margin-top: 20px;
+}
+.action-buttons {
+  margin-top: 20px;
+}
+</style>
