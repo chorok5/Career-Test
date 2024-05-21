@@ -24,7 +24,7 @@ export default {
     return {
       title: null,
       content: null,
-      writer: 'Anonymous', // 임의의 작가 이름 설정
+      writer: '관리자', // 임의의 작가 이름 설정
       date: null // 초기화하지 않음
     }
   },

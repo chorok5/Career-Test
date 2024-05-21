@@ -1,28 +1,28 @@
 <template>
-  <div>
-    <h1>제목 : {{ question.title }}</h1>
-    <p>내용 : {{ question.content }}</p>
-    <p>작성자: {{ question.writer }}</p>
-    <p>날짜: {{ question.date }}</p>
-    <div v-if="isUpdating">
-      <div class="form-group">
-        <label for="title">제목</label>
-        <input type="text" class="form-control" id="title" v-model="question.title" required>
+  <div class="container mt-5">
+    <div class="card">
+      <div class="card-header">
+        <h2 class="card-title">{{ question.title }}</h2>
+        
       </div>
-      <div class="form-group">
-        <label for="content">내용</label>
-        <textarea class="form-control" id="content" rows="5" v-model="question.content" required></textarea>
+      <div class="card-body">
+        <p class="card-text">내용: {{ question.content }}</p>
+        <p class="card-text">작성자: {{ question.writer }}</p>
+        <p class="card-text">날짜: {{ new Date(question.date).toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }) }}</p>
       </div>
-      <div class="form-group">
-        <label for="writer">작성자</label>
-        <input type="text" class="form-control" id="writer" v-model="question.writer" required>
+      <div class="card-footer">
+        <div class="d-flex justify-content-end">
+          <div v-if="isUpdating">
+            <button @click="updateQuestion" class="btn btn-primary">수정 완료</button>
+            <button @click="cancelUpdate" class="btn btn-secondary">취소</button>
+          </div>
+          <div v-else>
+            <button @click="goBack" class="btn btn-info">돌아가기</button>
+            <button @click="startUpdate" class="btn btn-primary">수정하기</button>
+            <button @click="deleteQuestion" class="btn btn-danger">삭제하기</button>
+          </div>
+        </div>
       </div>
-      <button @click="updateQuestion" class="btn btn-primary">수정 완료</button>
-      <button @click="cancelUpdate" class="btn btn-secondary">취소</button>
-    </div>
-    <div v-else>
-      <button @click="startUpdate" class="btn btn-primary">수정하기</button>
-      <button @click="deleteQuestion" class="btn btn-danger">삭제하기</button>
     </div>
   </div>
 </template>
@@ -85,6 +85,9 @@ export default {
           console.error('Error deleting question:', error);
         });
     }
+  },
+  goBack() {
+    this.$router.go(-1); // 이전 페이지로 이동
   }
 }
 }
