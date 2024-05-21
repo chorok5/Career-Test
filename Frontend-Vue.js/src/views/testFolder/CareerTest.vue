@@ -1,19 +1,29 @@
 <template>
   <div class="container">
+    <MenuPage />
+    <SimriSecMenu />
     <h1 class="text-center mt-5 mb-4">심리검사</h1>
     <div v-for="(question, index) in questions" :key="question.qid" class="card mb-4">
       <div class="card-body" v-if="index !== 10">
         <h3 class="card-title">{{ question.ttitle }}</h3>
-        <div class="form-check d-flex flex-row flex-wrap" v-for="(option, optionIndex) in question.options"
-          :key="optionIndex">
-          <input type="radio" :name="'question-' + question.qid" :value="option.value"
-            v-model="userAnswers[question.qid]" class="form-check-input"
-            :id="'option' + question.qid + '-' + optionIndex" />
-          <label :for="'option' + question.qid + '-' + optionIndex" class="form-check-label mr-3">{{ option.label
-            }}</label>
+        <div class="form-check d-flex flex-row flex-wrap">
+          <div v-for="(option, optionIndex) in question.options" :key="optionIndex" class="col-12 col-md-4 mb-2 d-flex align-items-center">
+            <input 
+              type="radio" :name="'question-' + question.qid" 
+              :value="option.value"
+              v-model="userAnswers[question.qid]" 
+              class="form-check-input custom-radio" 
+              :id="'option' + question.qid + '-' + optionIndex" />
+            <label
+              :for="'option' + question.qid + '-' + optionIndex"
+              class="form-check-label custom-label"
+              :style="{ background: userAnswers[question.qid] === option.value ? '#8CCEFF' : '#fff' }" 
+            >
+              {{ option.label }}</label>
         </div>
       </div>
     </div>
+  </div>
     <!-- 결과 출력 -->
     <div class="card mb-4" v-if="result.totalScore !== null">
       <div class="card-body">
@@ -25,11 +35,22 @@
     </div>
     <button @click="submitTest" class="btn btn-primary btn-block">완료</button>
   </div>
+
+
 </template>
 
 <script>
 import axios from 'axios';
+
+import MenuPage from '@/components/MenuPage.vue';
+import SimriSecMenu from '@/views/counselingFolder/SimriSecMenu.vue';
+
 export default {
+  name: 'CareerTest',
+    components: {
+    MenuPage,
+    SimriSecMenu
+  },
   data() {
     return {
       questions: [
@@ -182,21 +203,88 @@ export default {
 
 <style lang="scss">
 .container {
-  max-width: 600px;
+  max-width: 800px; // 00px 대신 실제 최대 너비를 지정해주세요
   margin: auto;
   padding: 0 15px;
 }
 
 .card {
+  width: 100%;
+  max-width: 1000px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 0 auto;
+}
+.card-body {
+  flex-direction: column;
+  
 }
 
-.card-body {
-  padding: 1.25rem;
+.card-title {
+  padding: 10px;
+  margin-bottom: 2rem;
+}
+
+.col-12.col-md-4.mb-2.d-flex.align-items-center {
+  width: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center; // 가로 방향으로 중앙 정렬
+  padding: 10px; // 내부 여백 추가
+  margin: 5px; // 옵션들 간의 간격 추가
+  // background-color: #f8f9fa; // 배경색 설정
 }
 
 .btn {
   font-size: 1rem;
   padding: 0.75rem 1.5rem;
+}
+
+.form-check {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column; // 수정: 옵션을 수직으로 정렬하기 위해
+  align-items: center;
+  justify-content: center; // 옵션들을 가로 방향으로 중앙 정렬
+}
+
+.form-check-input {
+  margin-right: 10px; /* 라디오 버튼과 라벨 사이의 간격 조정 */
+}
+
+.form-check-label {
+  margin-left: 10px; /* 라벨과 라디오 버튼 사이의 간격 조정 */
+}
+.custom-radio {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  appearance: none;
+  background-color: #fff;
+  border: 1px solid #ced4da;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.custom-radio:checked {
+  background-color: #90c6ff;
+  border: 1px solid #90c6ff;
+}
+.custom-radio:checked + .custom-label {
+  background-color: #007bff;
+}
+.custom-label {
+  display: flex;
+  align-items: center;
+  padding: 5px 10px;
+  margin-left: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  border-radius: 15px; // 둥근 모서리 설정
+}
+.custom-label:hover {
+  background-color: #f8f9fa;
+}
+.radio-container:hover .custom-label {
+  background-color: #f8f9fa;
 }
 </style>
