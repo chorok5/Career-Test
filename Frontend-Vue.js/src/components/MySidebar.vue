@@ -1,56 +1,82 @@
 <template>
-    <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
-      <div class="position-sticky pt-3">
-        <div class="user-welcome mb-3">
-        '{{ $store.state.account.name }}' 님 반갑습니다.
+  <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block custom-sidebar">
+    <div class="py-4 rounded-top text-white pl-3 mb-0" style="background-color: midnightblue;">
+      <h4 class="mb-0" style="margin: 0;">메뉴</h4>
+    </div>
+    <div class="menu-items text-center justify-content-center  align-items-center">
+      <div class="menu-item text-center">
+        <router-link class="nav-link text-dark" :to="{ name: 'myinfo' }">나의 정보 관리</router-link>
       </div>
-        <ul class="nav flex-column">
-          <li class="nav-item">
-            <router-link class="nav-link" :to="{ name: 'myinfo' }">나의 정보 관리</router-link>
-          </li>
-          <li class="nav-item">
-            <router-link class="nav-link" :to="{ name: 'myconsultations' }">나의 상담 내역</router-link>
-          </li>
-          <li class="nav-item">
-            <router-link class="nav-link" :to="{ name: 'mygroup' }">비교과(집단 상담)내역</router-link>
-          </li>
-          <li class="nav-item">
-            <router-link class="nav-link" :to="{ name: 'mysimri' }">나의 심리검사 결과</router-link>
-          </li>
-          <li class="nav-item">
-            <router-link class="nav-link" :to="{ name: 'myqna' }">나의 문의 내역</router-link>
-          </li>
-          <li class="nav-item">
-            <router-link class="nav-link" :to="{ name: 'myreviews' }">나의 리뷰</router-link>
-          </li>
+      <div class="menu-item text-center">
+        <router-link class="nav-link text-dark" :to="{ name: 'myconsultations' }">나의 상담 내역</router-link>
+      </div>
+      <div class="menu-item text-center">
+        <router-link class="nav-link text-dark" :to="{ name: 'StudentConsultations' }">나의 상담 내역(학생용)</router-link>
+      </div>
+      <div class="menu-item text-center">
+        <router-link class="nav-link text-dark" :to="{ name: 'mygroup' }">비교과(집단 상담)내역</router-link>
+      </div>
+      <div class="menu-item text-center">
+        <router-link class="nav-link text-dark" :to="{ name: 'mysimrireserve' }">심리검사 예약 내역</router-link>
+      </div>
+      <div class="menu-item text-center">
+        <router-link class="nav-link text-dark" :to="{ name: 'mysimri' }">나의 심리검사 결과</router-link>
+      </div>
+      <div class="menu-item text-center">
+        <router-link class="nav-link text-dark" :to="{ name: 'myqna' }">나의 문의 내역</router-link>
+      </div>
+      <div class="menu-item text-center">
+        <router-link class="nav-link text-dark" :to="{ name: 'myreviews' }">나의 리뷰</router-link>
+      </div>
+    </div>
+  </nav>
+</template>
 
-        </ul>
-      </div>
-    </nav>
-  </template>
-  
-  <script>
-  export default {
-    name: 'Sidebar'
-  };
-  </script>
-  
-  <style scoped>
-  .sidebar {
-    position: -webkit-sticky;
-    position: sticky;
-    top: 56px; /* Adjust based on the height of HeaderMenu */
-    height: calc(100vh - 56px); /* Adjust based on the height of HeaderMenu */
-    padding-top: 1rem;
-    overflow-x: hidden;
-    overflow-y: auto; /* Enable scrolling if the content exceeds the viewport height */
-  }
-  .sidebar .nav-link {
-    font-weight: 500;
-    color: #333;
-  }
-  .sidebar .nav-link:hover {
-    color: #007bff;
-  }
-  </style>
-  
+<script>
+export default {
+  name: 'Sidebar'
+};
+</script>
+
+<style>
+#sidebar {
+  width: 230px;
+}
+.custom-sidebar {
+  position: fixed;
+  top: 150px; /* 조금 아래로 내려줍니다. */
+  left: 20px;
+  width: 200px;
+  height: auto;
+  padding-top:0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background-color: #fff; /* 흰 배경으로 변경합니다. */
+  border-radius: 30px; /* 테두리를 둥글게 만듭니다. */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
+}
+
+.custom-sidebar .menu-item {
+  padding-top: 1rem;
+  padding: 0.5rem 1rem;
+  height: 50px;
+  margin : 0 auto;
+  text-align: center;
+  align-content: center;
+}
+
+.custom-sidebar .menu-item:hover {
+  background-color: #dadee1;
+  /* Added styles for hover effect */
+  font-weight: bold;
+  color: midnightblue;
+}
+
+.custom-sidebar .menu-item:not(:first-child) {
+  border-top: 1px solid #dee2e6;
+}
+
+.custom-sidebar .menu-item:last-child {
+  border-radius: 0 0 10px 10px;
+}
+</style>
