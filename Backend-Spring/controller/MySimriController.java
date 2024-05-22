@@ -42,7 +42,7 @@ public class MySimriController {
         int memberId = jwtService.getId(token);
         List<TestResult> testResults = testResultRepository.findByMemberIdAndQidOrderByTdateDesc(memberId, 10);
         
-        System.out.println("list 출력"+testResults);
+        System.out.println("list 출력??? : "+testResults);
         
         // 조회된 TestResult가 없을 경우
         if (testResults.isEmpty()) {
@@ -60,7 +60,7 @@ public class MySimriController {
         Map<String, Object> response = new HashMap<>();
         response.put("recommendedJobs", getRecommendedJobs(totalScore));
         response.put("personalTraits", getPersonalTraits(totalScore));
-        System.out.println("출력 확인 : "+response);
+        System.out.println("response 출력 확인 : "+response);
         return ResponseEntity.ok(response);
     }
 
@@ -99,5 +99,23 @@ public class MySimriController {
 
         return personalTraits;
     }
-
+    
+    @GetMapping("/api/mysimri/history")
+    public ResponseEntity<List<TestResult>> getTestResultHistory(@CookieValue(value = "token", required=false) String token) {
+        if (!jwtService.isValid(token)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+        int memberId = jwtService.getId(token);
+        List<TestResult> testResults = testResultRepository.findPreviousResultsByMemberId(memberId);
+        
+        if (testResults.size() > 1) {
+            testResults = testResults.subList(1, testResults.size()); // 가장 최근 날짜의 결과를 제외한 나머지 결과
+        } else {
+            testResults = new ArrayList<>(); // 과거 기록이 없는 경우 빈 리스트 반환
+        }
+        
+        System.out.println("과거 기록 list 출력: " + testResults);
+        
+        return ResponseEntity.ok(testResults);
+    }
 }
