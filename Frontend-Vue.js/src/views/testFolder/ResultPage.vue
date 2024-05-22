@@ -1,40 +1,52 @@
 <template>
   <div class="container mt-5">
-    <h1 class="mb-4">심리검사 결과</h1>
-    <div v-if="isValidResult">
-      <div class="mb-3">
-        <h2>{{ result.title }}</h2>
-        <h3>{{ result.description }}</h3>
-        <p>총점: {{ result.totalScore }} / 30</p>
+    <h1 class="mb-4 text-center text-primary">심리검사 결과</h1>
+    <div v-if="isValidResult" class="result-container shadow-lg">
+      <div class="mb-4">
+        <h2 class="mb-2 text-center text-primary">{{ result.title }}</h2>
+        <h3 class="mb-3 text-center text-muted">{{ result.description }}</h3>
+        <p class="mb-2 text-center" style="font-size: 18px;">
+  총점: <span class="badge badge-info" style="color:cadetblue; font-size: 18px;">{{ result.totalScore }} / 30</span>
+</p></div>
+<br>
+      <h3 class="mb-3 title-highlight text-center">추천 직업</h3>
+      <div class="row flex-nowrap flex-wrap justify-content-center">
+        <div 
+          class="col-md-2 mb-2 recommended-job d-flex align-items-center justify-content-center" 
+          v-for="job in result.recommendedJobs.split(',')" 
+          :key="job.trim()"
+          style="margin-right: 10px;"
+        >
+          <p class="mb-0">{{ job.trim() }}</p>
+        </div>
+      </div>
+<br><br>
+      <h3 class="mb-3 title-highlight text-center">당신의 성향</h3>
+      <div class="row">
+        <div 
+          class="col-md-4 mb-3" 
+          v-for="(trait, index) in result.personalTraits" 
+          :key="index"
+        >
+          <div class="trait-card h-100">
+            <div class="card-body">
+              <h5 class="card-title">{{ traitTitles[index] }}</h5><br>
+        <ul class="card-text" style="text-align: left;">
+          <li v-for="(item, i) in trait.split(',')" :key="i" style="margin-left: 10px;">
+            {{ item.trim() }}
+          </li>
+        </ul>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <h3 class="mb-3 title-highlight section-title">추천 직업</h3>
-<div class="row flex-nowrap flex-wrap justify-content-center">
-  <div class="col-md-2 mb-2 recommended-job" v-for="job in result.recommendedJobs.split(',')" :key="job.trim()">
-    <p class="text-center">{{ job.trim() }}</p>
-  </div>
-</div>
-
-<h3 class="mb-3 title-highlight section-title">당신의 성향</h3>
-<div class="row">
-  <div class="col-md-4 mb-3" v-for="(trait, index) in result.personalTraits" :key="index">
-    <div class="trait-card h-100">
-      <div class="card-body">
-        <h5 class="card-title">{{ traitTitles[index] }}</h5>
-        <p class="card-text">{{ trait }}</p>
-      </div>
-    </div>
-  </div>
-</div>
-
-      <div class="text-center">
+      <div class="text-center mt-4">
         <button class="btn btn-primary" @click="retakeTest">다시 검사하기</button>
       </div>
     </div>
   </div>
 </template>
-
-
 
 <script>
 import axios from 'axios';
@@ -95,70 +107,60 @@ export default {
 };
 </script>
 
-
 <style scoped>
 .result-container {
-  background-color: #f5f5f5;
-  padding: 20px;
-  border-radius: 8px;
-}
-
-.action-buttons {
-  margin-top: 20px;
-  align-items: center;
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 10px;
 }
 
 .recommended-job {
-    background: linear-gradient(45deg, #49a6ea, #377dff);
-    color: #fff;
-    padding: 20px;
-    margin-bottom: 20px;
-    text-align: center;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-    transition: transform 0.2s;
-  }
+  background: linear-gradient(45deg, #1166c1, #931ed6);
+  color: #fff;
+  padding: 15px;
+  margin-bottom: 20px;
+  text-align: center;
+  border-radius: 50px; /* 원형 모양으로 변경 */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s;
+  font-weight: bold; /* 글자 두껍게 */
+  text-transform: uppercase; /* 모든 글자 대문자로 */
+}
 
-  .recommended-job:hover {
-    transform: scale(1.05);
-  }
+.recommended-job:hover {
+  transform: scale(1.05);
+}
 
-  .trait-card {
-    background: #fff;
-    padding: 20px;
-    margin-bottom: 20px;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s;
-  }
+.trait-card {
+  background: #f8f9fa;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
 
-  .trait-card:hover {
-    transform: scale(1.05);
-  }
+.trait-card:hover {
+  transform: scale(1.05);
+}
 
-  .trait-card .card-title {
-    font-weight: bold;
-    color: #343a40;
-  }
+.trait-card .card-title {
+  font-weight: bold;
+}
 
-  .trait-card .card-text {
-    color: #868e96;
-  }
+.title-highlight {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 5px;
+}
 
-  .title-highlight {
-    color: #377dff;
-    font-weight: bold;
-    margin-bottom: 20px;
-  }
-
-  .section-title:before {
-    content: '\f0c3';
-    font-family: 'FontAwesome';
-    display: inline-block;
-    margin-right: 10px;
-    font-size: 1.2em;
-    color: #377dff;
-  }
-
-
+.title-highlight::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(to right, #007bff, #6c757d);
+}
 </style>

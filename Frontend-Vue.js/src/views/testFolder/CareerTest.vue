@@ -4,7 +4,7 @@
     <SimriSecMenu />
     <h1 class="text-center mt-5 mb-4">심리검사</h1>
     <div v-for="(question, index) in questions" :key="question.qid" class="card mb-4">
-      <div class="card-body" v-if="index !== 10">
+      <div class="card-body test-box" v-if="index !== 10">
         <h3 class="card-title">{{ question.ttitle }}</h3>
         <div class="form-check d-flex flex-row flex-wrap">
           <div v-for="(option, optionIndex) in question.options" :key="optionIndex" class="col-12 col-md-4 mb-2 d-flex align-items-center">
@@ -239,6 +239,9 @@ export default {
   padding: 0.75rem 1.5rem;
 }
 
+.test-box{
+  background: linear-gradient(180deg, rgb(243, 250, 245), #fffeff);
+}
 .form-check {
   margin-top: 1rem;
   display: flex;

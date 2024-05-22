@@ -15,7 +15,7 @@
                         <div class="card-body d-flex flex-column justify-content-between">
                             <div>
                                 <h5 class="card-title text-left">{{ item.title }}</h5>
-                                <p class="card-text text-left">{{ item.description }}</p>
+                                <p class="card-text text-left" v-html="item.description"></p>
                             </div>
                             <div class="text-right">
                                 <a :href="item.link" target="_blank" class="btn btn-primary">바로가기</a>
@@ -43,22 +43,22 @@ export default {
             items: [
                 {
                     title: '직업선호도검사 S형',
-                    description: '직업선호도 검사는 좋아하는 활동, 관심 있는 직업, 선호하는',
+                    description: '직업선호도 검사는 좋아하는 활동, 관심 있는 직업, 선호하는 분야를 탐색하여<br>여러분의 직업흥미유형에 적합한 직업들을 제공해 줍니다.',
                     link: 'https://www.work.go.kr/consltJobCarpa/jobPsyExam/aduPreSNewDetail.do'
                 },
                 {
                     title: '직업선호도검사 L형',
-                    description: '직업선호도검사 L형은 대학생 및 성인구직자들이 자신의 흥미.',
+                    description: '직업선호도 검사는 좋아하는 활동, 관심 있는 직업, 선호하는 분야를 탐색하여<br>여러분의 직업흥미유형에 적합한 직업들을 제공해 줍니다.',
                     link: 'https://www.work.go.kr/consltJobCarpa/jobPsyExam/aduPreLNewDetail.do'
                 },
                 {
                     title: '대학생 진로준비도 검사',
-                    description: '대학생 진로준비도 검사는ddddd.',
+                    description: '대학생 및 취업을 준비하는 대졸 청년층 구직자들을 대상으로 하며, 진로발달수준과 취업준비 행동수준에 대한 객관적인 정보를 바탕으로 효과적인 진로 및 취업선택을 지원하고자 개발된 검사입니다.',
                     link: 'https://www.work.go.kr/consltJobCarpa/jobPsyExam/univJobPreDetail.do'
                 },
                 {
                     title: '구직준비도검사',
-                    description: '구직을 희망하는 사람들이 성공적인 구직을 할 준비가 되어',
+                    description: '구직을 희망하는 사람들이 성공적인 구직을 할 준비가 되어 있는가를 알아보고, 이를 토대로 적합한 취업지원 서비스를 선택할 수 있도록 해주는 검사입니다.',
                     link: 'https://www.work.go.kr/consltJobCarpa/jobPsyExam/aduEquipDetail.do'
                 }
             ]
