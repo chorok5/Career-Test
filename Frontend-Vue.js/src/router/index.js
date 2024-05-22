@@ -21,7 +21,9 @@ import login from "@/views/LoginPage.vue";
 import jobConsulting from "@/views/JobConsulting.vue"; // 취업상담
 import mypage from "@/views/mypage/MyPage.vue";
 import MyConsultations from '@/views/mypage/MyConsultations.vue';
+import StudentConsultations from '@/views/mypage/StudentConsultations.vue';
 import MyGroupConsulte from '@/views/mypage/MyGroupConsulte.vue';
+import MyInfo from '@/views/mypage/MyInfo.vue';
 import MyQna from '@/views/mypage/MyQna.vue';
 import MyReviews from '@/views/mypage/MyReviews.vue';
 import MySimriResult from '@/views/mypage/MySimriResult.vue';
@@ -33,7 +35,7 @@ import pop from '@/layout/RegTimeLayout.vue';
 import MainLayout from '@/layout/MainLayout.vue';
 //import header from '@/components/Header.vue'
 import secMenuTest from '@/views/regviews/secMenuTest.vue';
-import applyForm3 from '@/views/regviews/applyForm3.vue';
+import applyForm3 from '@/views/RsvAndApply/applyForm3.vue';
 import resultWrite from '@/views/regviews/resultWrite.vue';
 import regResult from '@/views/regviews/regResult.vue';
 import jobapply from '@/views/jobs/apply.vue';
@@ -41,10 +43,15 @@ import jobintro from '@/views/jobs/intro.vue';
 import joblist from '@/views/jobs/list.vue';
 import jobtest from '@/views/jobs/test.vue';
 
+import cardNews from '@/views/alpha/cardNews.vue';
+import cardDetail1 from '@/views/alpha/cardDetail1.vue';
+import cardDetail2 from '@/views/alpha/cardDetail2.vue';
+import cardDetail3 from '@/views/alpha/cardDetail3.vue';
 
 import adminMemberControl from '@/layout/AdminSidebar.vue';
-import MemberControl from '@/components/MemberControl.vue'
-import BoardControl from '@/components/BoardControl.vue'
+import MemberControl from '@/components/MemberControl.vue';
+import BoardControl from '@/components/BoardControl.vue';
+import resultUpdate from '@/views/regviews/resultUpdate.vue';
 
 import { createRouter,createWebHashHistory } from 'vue-router';
 
@@ -70,6 +77,9 @@ const routes = [
     {path: '/rsrvTest4', name:'rsrvTest4', component: () => import('@/views/RsvAndApply/rsrvTest4.vue'), meta: {layout : MainLayout} },
     {path: '/rsrvTest3', name:'rsrvTest3', component: () => import('@/views/RsvAndApply/rsrvTest3.vue')},
     {path: '/applyForm1', name:'applyForm1', component: () => import('@/views/RsvAndApply/applyForm1.vue'), props: route => ({ ...route.query }), meta: {layout : MainLayout}},
+    {path: '/applyForm2', name:'applyForm2', component: () => import('@/views/RsvAndApply/applyForm2.vue'), props: route => ({ ...route.query }), meta: {layout : MainLayout}},
+    {path: '/applyForm3', name:'applyForm3', component: () => import('@/views/RsvAndApply/applyForm3.vue'), props: route => ({ ...route.query }), meta: {layout : MainLayout}},
+    {path: '/applyForm4', name:'applyForm4', component: () => import('@/views/RsvAndApply/applyForm4.vue'), props: route => ({ ...route.query }), meta: {layout : MainLayout}},
     {path: '/jobConsulting', name: 'jobConsulting', component: jobConsulting, meta: {layout : MainLayout}}, // 취업상담 경로 추가
     {path: '/login', name: 'login', component: login, meta: {layout : MainLayout} }, // 로그인 경로 추가
     {path: '/mypage', name: 'mypage',component: mypage, meta: {layout : MainLayout}}, // 마이페이지
@@ -94,8 +104,10 @@ const routes = [
     {path: '/test/result', name: 'ResultPage',component: ResultPage, meta: {layout : MainLayout}},
     {path: '/mypage', name: 'mypage', component: mypage, meta: {layout : MainLayout}},
     {path: '/myconsultations', name: 'myconsultations', component: MyConsultations, meta: { layout: MainLayout } },
+    {path: '/StudentConsultations', name: 'StudentConsultations', component: StudentConsultations, meta: { layout: MainLayout } },
     {path: '/mygroup', name: 'mygroup', component: MyGroupConsulte, meta: { layout: MainLayout } },
     {path: '/myqna', name: 'myqna', component: MyQna, meta: { layout: MainLayout } },
+    {path: '/myinfo', name: 'myinfo', component: MyInfo, meta: { layout: MainLayout } },
     {path: '/myreviews', name: 'myreviews', component: MyReviews, meta: { layout: MainLayout } },
     {path: '/mysimri', name: 'mysimri', component: MySimriResult, meta: { layout: MainLayout } },
     {path: '/mysimrireserve', name: 'mysimrireserve', component: MySimriReserve, meta: { layout: MainLayout } },
@@ -106,7 +118,14 @@ const routes = [
     {path: '/jobs/apply', name: 'jobapply', component: jobapply, meta: { layout: MainLayout } },
     {path: '/jobs/intro', name: 'jobintro', component: jobintro, meta: { layout: MainLayout } },
     {path: '/jobs/list', name: 'joblist', component: joblist, meta: { layout: MainLayout } },
-    {path: '/jobs/test', name: 'jobtest', component: jobtest, meta: { layout: MainLayout } }
+    {path: '/jobs/test', name: 'jobtest', component: jobtest, meta: { layout: MainLayout } },
+    {path: '/cardNews', name: 'cardNews', component: cardNews, meta: { layout: MainLayout } },
+    {path: '/cardDetail1', name: 'cardDetail1', component: cardDetail1, meta: { layout: MainLayout } },
+    {path: '/cardDetail2', name: 'cardDetail2', component: cardDetail2, meta: { layout: MainLayout } },
+    {path: '/cardDetail3', name: 'cardDetail3', component: cardDetail3, meta: { layout: MainLayout } },
+    {path: '/resultUpdate', name: 'resultUpdate', component: resultUpdate, meta: { layout: MainLayout } },
+
+
     
     
 ];
