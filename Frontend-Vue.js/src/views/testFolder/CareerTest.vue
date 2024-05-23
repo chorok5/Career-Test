@@ -1,43 +1,55 @@
 <template>
-  <div class="container">
+  <div class="career-test">
     <MenuPage />
+  <div class="container my-5">
     <SimriSecMenu />
-    <h1 class="text-center mt-5 mb-4">심리검사</h1>
-    <div v-for="(question, index) in questions" :key="question.qid" class="card mb-4">
+    <h1 class="title-box text-center mt-5 mb-4" style="color:darkgreen; font-weight: bolder;">  🙋‍♀️ 직업 및 성향 심리검사 🙋‍♂️  </h1>
+    <div v-for="(question, index) in questions" :key="question.qid" class="card mb-4 shadow-sm">
       <div class="card-body test-box" v-if="index !== 10">
-        <h3 class="card-title">{{ question.ttitle }}</h3>
-        <div class="form-check d-flex flex-row flex-wrap">
-          <div v-for="(option, optionIndex) in question.options" :key="optionIndex" class="col-12 col-md-4 mb-2 d-flex align-items-center">
-            <input 
-              type="radio" :name="'question-' + question.qid" 
+        <h3 class="card-title" style="font-weight: bold;">{{ question.ttitle }}</h3>
+        <div class="form-check d-flex flex-row flex-wrap justify-content-center">
+          <div
+            v-for="(option, optionIndex) in question.options"
+            :key="optionIndex"
+            class="radio-container d-flex align-items-center mb-3" 
+          >
+          <input
+              type="radio"
+              :name="'question-' + question.qid"
               :value="option.value"
-              v-model="userAnswers[question.qid]" 
-              class="form-check-input custom-radio" 
-              :id="'option' + question.qid + '-' + optionIndex" />
+              v-model="userAnswers[question.qid]"
+              class="custom-radio" 
+              :id="'option' + question.qid + '-' + optionIndex"
+            />
             <label
               :for="'option' + question.qid + '-' + optionIndex"
-              class="form-check-label custom-label"
-              :style="{ background: userAnswers[question.qid] === option.value ? '#8CCEFF' : '#fff' }" 
+              class="custom-label w-100 rounded-pill px-5 py-3" style="font-size:18px; font-weight:550;"
+              :class="{
+                'selected-option': userAnswers[question.qid] === option.value,
+                
+              }"
             >
-              {{ option.label }}</label>
+              {{ option.label }}
+            </label>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+
     <!-- 결과 출력 -->
-    <div class="card mb-4" v-if="result.totalScore !== null">
+    <div class="card mb-4 shadow-sm" v-if="result.totalScore !== null">
       <div class="card-body">
         <h3 class="card-title">최종 결과</h3>
-        <p>총 점수: {{ result.totalScore }}</p>
-        <p>추천 직업: {{ result.recommendedJobs }}</p>
-        <p>개인 성향: {{ result.personalTraits }}</p>
+        <p>총 점수: <span class="font-weight-bold">{{ result.totalScore }}</span></p>
+        <p>추천 직업: <span class="font-weight-bold">{{ result.recommendedJobs }}</span></p>
+        <p>개인 성향: <span class="font-weight-bold">{{ result.personalTraits }}</span></p>
       </div>
     </div>
-    <button @click="submitTest" class="btn btn-primary btn-block">완료</button>
+    <button @click="submitTest" class="btn btn-success btn-block btn-lg mt-4 shadow-sm">완료</button>
   </div>
-
-
+</div>
 </template>
+
 
 <script>
 import axios from 'axios';
@@ -201,22 +213,21 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped >
 .container {
-  max-width: 800px; // 00px 대신 실제 최대 너비를 지정해주세요
+  max-width: 1200px;
   margin: auto;
   padding: 0 15px;
 }
 
 .card {
   width: 100%;
-  max-width: 1000px;
+  width: 1000px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   margin: 0 auto;
 }
 .card-body {
   flex-direction: column;
-  
 }
 
 .card-title {
@@ -224,57 +235,32 @@ export default {
   margin-bottom: 2rem;
 }
 
-.col-12.col-md-4.mb-2.d-flex.align-items-center {
-  width: 160px;
-  display: flex;
-  align-items: center;
-  justify-content: center; // 가로 방향으로 중앙 정렬
-  padding: 10px; // 내부 여백 추가
-  margin: 5px; // 옵션들 간의 간격 추가
-  // background-color: #f8f9fa; // 배경색 설정
-}
-
 .btn {
   font-size: 1rem;
   padding: 0.75rem 1.5rem;
 }
-
-.test-box{
-  background: linear-gradient(180deg, rgb(243, 250, 245), #fffeff);
+// .title-box {
+//             background-color: #369f3a; /* 진한 배경색 (예: 어두운 회색) */
+//             color: #ffffff; /* 글자색 흰색 */
+//             padding: 10px;
+//             text-align: center;
+//             margin: 50px auto 40px; /* 위쪽과 아래쪽 간격 조정 */
+//             border-radius: 3px; /* 모서리 둥글게 */
+//             width: fit-content;
+//         }
+.test-box {
+  // background: linear-gradient(180deg, rgb(243, 250, 245), #fffeff);
+  border-left: 4px solid #2fbb6e;
+  padding-left: 20px;
 }
 .form-check {
   margin-top: 1rem;
-  display: flex;
-  flex-direction: column; // 수정: 옵션을 수직으로 정렬하기 위해
-  align-items: center;
-  justify-content: center; // 옵션들을 가로 방향으로 중앙 정렬
 }
 
-.form-check-input {
-  margin-right: 10px; /* 라디오 버튼과 라벨 사이의 간격 조정 */
-}
-
-.form-check-label {
-  margin-left: 10px; /* 라벨과 라디오 버튼 사이의 간격 조정 */
-}
 .custom-radio {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  appearance: none;
-  background-color: #fff;
-  border: 1px solid #ced4da;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+  display: none;
 }
 
-.custom-radio:checked {
-  background-color: #90c6ff;
-  border: 1px solid #90c6ff;
-}
-.custom-radio:checked + .custom-label {
-  background-color: #007bff;
-}
 .custom-label {
   display: flex;
   align-items: center;
@@ -282,12 +268,25 @@ export default {
   margin-left: 10px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  border-radius: 15px; // 둥근 모서리 설정
+  border: 1px solid #ced4da; // 테두리 추가
+  width: 100%; // 라벨이 옵션 영역을 모두 차지하도록 설정
 }
 .custom-label:hover {
-  background-color: #f8f9fa;
+  background-color: hsl(210, 17%, 98%);
 }
 .radio-container:hover .custom-label {
-  background-color: #f8f9fa;
+  background-color: #189521;
+  color:white;
+}
+
+.custom-radio:checked + .custom-label {
+  background-color: #90c6ff;
+  border-color: #90c6ff; // 체크된 라벨의 테두리 색상 변경
+  font-weight: bold;
+}
+
+.selected-option {
+  background-color: #8cceff;
+  font-weight: bold;
 }
 </style>
