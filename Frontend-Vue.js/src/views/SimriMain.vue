@@ -2,8 +2,6 @@
   <div>
     <MenuPage />
     <SimriSecMenu />
-
-
   </div>
 </template>
 
@@ -15,45 +13,7 @@ export default {
     components: {
     MenuPage,
     SimriSecMenu
-  },
-    data(){
-        return{
-            act : "none",
-            cssAct: [
-                {display : "none"},
-                {display : "none"},
-                {display : "none"},
-                {display : "none"}
-            ],
-            select: [
-                {},
-                {},
-                {},
-                {}
-            ],
-        }
-    },
-    mounted(){
-        this.cssAct[0] = {display:"block"};
-        this.select[0] = {border:"2px solid rgb(43, 43, 165", 'border-bottom':"none"};
-    },
-    methods:{
-        displayAct(num){
-            this.cssAct = this.cssAct.map((style, i) => {
-            if(i == num){
-                return {display:"block"};                
-            }
-            return {display:"none"};
-        })
-            this.select = this.select.map((style, i)=> {
-                if(i==num){
-                    return {border:"2px solid rgb(43, 43, 165", 'border-bottom':"none"};
-                }
-            })
-        }
-    },
-
-}
+  }};
 </script>
 
 <style>
