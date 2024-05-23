@@ -4,88 +4,89 @@
     <MenuPage />
     <div class="container-fluid mt-5 pt-4">
       <div class="row">
-        <div class="col-md-2">
-        </div>
-        <div class="col-md-9">
-          <div v-if="testResult" class="card mt-4">
-            <div class="card-header">
-              <h2>테스트 결과</h2>
-            </div>
-            <div class="card-body">
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item">
-                  <p><strong>ID : </strong> {{ testResult.memberId }}</p>
-                  <p><strong>이름 : </strong>{{ $store.state.account.name }}'</p>
-                  <p><strong>검사 실시일 : </strong> {{ formatDate(testResult.tdate) }}</p>
-                </li>
-              </ul>
-              <div v-if="recommendedJobs" class="mt-4">
-                <h3>추천 직업</h3>
-                <p class="lead">{{ recommendedJobs }}</p>
+        <div class="col-md-2"></div>
+        <div class="col-md-8 d-flex justify-content-between">
+          <div class="col-md-8">
+            <div v-if="testResult" class="card mt-4">
+              <div class="card-header bg-primary text-white">
+                <h2 class="m-0">테스트 결과</h2>
               </div>
-              <div v-if="personalTraits && personalTraits.length" class="mt-4">
-                <h3>성향 분석</h3>
-                <ul class="list-group">
-                  <li v-for="trait in personalTraits" :key="trait" class="list-group-item">{{ trait }}</li>
+              <div class="card-body">
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item">
+                    <p><strong>ID : </strong> {{ testResult.memberId }}</p>
+                    <p><strong>이름 : </strong>{{ $store.state.account.name }}</p>
+                    <p><strong>검사 실시일 : </strong> {{ formatDate(testResult.tdate) }}</p>
+                  </li>
+                </ul>
+                <div v-if="recommendedJobs" class="mt-4">
+                  <h3>추천 직업</h3>
+                  <p class="lead">{{ recommendedJobs }}</p>
+                </div>
+                <div v-if="personalTraits && personalTraits.length" class="mt-4">
+                  <h3>성향 분석</h3>
+                  <ul class="list-group">
+                    <li v-for="trait in personalTraits" :key="trait" class="list-group-item">{{ trait }}</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 history">
+            <div v-if="previousResults.length" class="card mt-4">
+              <div class="card-header bg-secondary text-white">
+                <h2 class="m-0">이전 심리검사 결과</h2>
+              </div>
+              <div class="card-body">
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item" v-for="result in previousResults" :key="result.id"
+                    @click="openModal(result)">
+                    <p><strong>ID : </strong>{{ result.memberId }}</p>
+                    <p><strong>검사 실시일 : </strong>{{ formatDate(result.tdate) }}</p>
+                  </li>
                 </ul>
               </div>
             </div>
           </div>
+        </div>
+      </div>
 
-          <!-- 과거 심리검사 결과 리스트 -->
-          <div v-if="previousResults.length" class="card mt-4">
-            <div class="card-header">
-              <h2>이전 심리검사 결과</h2>
+      <!-- 모달 컴포넌트 추가 -->
+      <div v-if="showModal" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+              <h5 class="modal-title">심리검사 결과</h5>
+              <button type="button" class="close" @click="closeModal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
             </div>
-            <div class="card-body">
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item" v-for="result in previousResults" :key="result.id"
-                  @click="openModal(result)">
-                  <p><strong>ID : </strong>{{ result.memberId }}</p>
-                  <p><strong>검사 실시일 : </strong>{{ formatDate(result.tdate) }}</p>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <!-- 모달 컴포넌트 추가 -->
-          <div v-if="showModal" class="modal" tabindex="-1" role="dialog">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title">심리검사 결과</h5>
-                  <button type="button" class="close" @click="closeModal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                  <!-- 선택한 심리검사 결과 표시 -->
-                  <p><strong>ID : </strong>{{ selectedResult.memberId }}</p>
-                  <p><strong>검사 실시일 : </strong>{{ formatDate(selectedResult.tdate) }}</p>
-                  <!-- 추천 직업 및 성향 분석 표시 -->
-                  <div v-if="modalRecommendedJobs" class="mt-4">
-                    <h3>추천 직업</h3>
-                    <p class="lead">{{ modalRecommendedJobs }}</p>
-                  </div>
-                  <div v-if="modalPersonalTraits && modalPersonalTraits.length" class="mt-4">
-                    <h3>성향 분석</h3>
-                    <ul class="list-group">
-                      <li v-for="trait in modalPersonalTraits" :key="trait" class="list-group-item">{{ trait }}</li>
-                    </ul>
-                  </div>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" @click="closeModal">Close</button>
-                </div>
+            <div class="modal-body">
+              <!-- 선택한 심리검사 결과 표시 -->
+              <p><strong>ID : </strong>{{ selectedResult.memberId }}</p>
+              <p><strong>검사 실시일 : </strong>{{ formatDate(selectedResult.tdate) }}</p>
+              <!-- 추천 직업 및 성향 분석 표시 -->
+              <div v-if="modalRecommendedJobs" class="mt-4">
+                <h3>추천 직업</h3>
+                <p class="lead">{{ modalRecommendedJobs }}</p>
+              </div>
+              <div v-if="modalPersonalTraits && modalPersonalTraits.length" class="mt-4">
+                <h3>성향 분석</h3>
+                <ul class="list-group">
+                  <li v-for="trait in modalPersonalTraits" :key="trait" class="list-group-item">{{ trait }}</li>
+                </ul>
               </div>
             </div>
-          </div>
-
-          <!-- 테스트 결과 로딩 중인 경우 표시할 메시지 -->
-          <div v-if="isLoading" class="alert alert-info mt-4">
-            <p>테스트 결과를 불러오는 중... (기록없음)</p>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" @click="closeModal">Close</button>
+            </div>
           </div>
         </div>
+      </div>
+
+      <!-- 테스트 결과 로딩 중인 경우 표시할 메시지 -->
+      <div v-if="isLoading" class="alert alert-info mt-4">
+        <p>테스트 결과를 불러오는 중... (기록없음)</p>
       </div>
     </div>
   </div>
@@ -219,6 +220,9 @@ export default {
 
 
 <style scoped>
+.history{
+  margin-left:50px;
+}
 .card {
   margin-top: 20px;
 }
