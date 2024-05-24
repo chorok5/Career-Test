@@ -31,13 +31,15 @@ import MySimriResult from '@/views/mypage/MySimriResult.vue';
 import MySimriReserve from '@/views/mypage/MySimriReserve.vue';
 import BoardList from '@/views/boardviews/BoardList.vue';
 //import menu from '@/components/MenuPage.vue';
-
+import regCounselor from '@/views/regviews/regCounselor.vue'
 import pop from '@/layout/RegTimeLayout.vue';
 import MainLayout from '@/layout/MainLayout.vue';
 //import header from '@/components/Header.vue'
 import secMenuTest from '@/views/regviews/secMenuTest.vue';
 import applyForm3 from '@/views/RsvAndApply/applyForm3.vue';
 import resultWrite from '@/views/regviews/resultWrite.vue';
+import ProResult from '@/views/regviews/ProResult.vue';
+import ProResultUpdate from '@/views/regviews/ProResultUpdate.vue';
 import ProResultWrite from '@/views/regviews/ProResultWrite.vue';
 import regResult from '@/views/regviews/regResult.vue';
 import jobapply from '@/views/jobs/apply.vue';
@@ -54,6 +56,7 @@ import adminMemberControl from '@/layout/AdminSidebar.vue';
 import MemberControl from '@/components/MemberControl.vue';
 import BoardControl from '@/components/BoardControl.vue';
 import resultUpdate from '@/views/regviews/resultUpdate.vue';
+import regIntroduce from '@/views/regviews/regIntroduce.vue';
 
 import { createRouter,createWebHashHistory } from 'vue-router';
 import axios from 'axios';
@@ -96,7 +99,16 @@ const routes = [
     {path: "/rsrv", component:()=> import("@/views/RsvAndApply/rsrvTest3.vue"), meta: {layout : MainLayout}},
     {path: '/rsrvTest', name:'rsrvTest', component: () => import('@/views/RsvAndApply/rsrvTest.vue')},
     {path: '/rsrvTest2', name:'rsrvTest2', component: () => import('@/views/RsvAndApply/rsrvTest2.vue')},
-    {path: '/rsrvTest4', name:'rsrvTest4', component: () => import('@/views/RsvAndApply/rsrvTest4.vue'), meta: {layout : MainLayout} },
+    { path: '/rsrvTest4', name: 'rsrvTest4', component: () => import('@/views/RsvAndApply/rsrvTest4.vue'), meta: { layout: MainLayout },
+
+    beforeEnter: (to, from, next) => {
+      if (store.state.account.id != null) {
+        next()
+      } else {
+        alert('상담 예약은 로그인 후 가능합니다.')
+        next('/login')
+      }
+  }},
     {path: '/rsrvTest3', name:'rsrvTest3', component: () => import('@/views/RsvAndApply/rsrvTest3.vue')},
     {path: '/applyForm1', name:'applyForm1', component: () => import('@/views/RsvAndApply/applyForm1.vue'), props: route => ({ ...route.query }), meta: {layout : MainLayout}},
     {path: '/applyForm2', name:'applyForm2', component: () => import('@/views/RsvAndApply/applyForm2.vue'), props: route => ({ ...route.query }), meta: {layout : MainLayout}},
@@ -112,11 +124,24 @@ const routes = [
     {path: '/counselorList', name: 'CounselorList', component: CounselorList, meta: {layout : MainLayout}},
     {path: '/simrisec', name: 'simrisec', component: SimriSecMenu, meta: {layout : MainLayout}},
     {path: '/faq', name: 'FAQ', component: FaqQuestion, meta: {layout : MainLayout}},
+
+    {path:"/faqwrite", name:"/faqwrite", component:()=> import("@/views/faqFolder/FaqWrite.vue"), meta: {layout : MainLayout},
+    beforeEnter: (to,from,next) =>{
+      if(store.state.account.id!=null){
+        next()
+      }else{
+        next('/')
+      }
+    }},
+
+
     {path: '/faqwrite', name: 'FaqWrite', component: FaqWrite, meta: {layout : MainLayout}},
     {path: '/faq/:id', name: 'FaqDetail', component: FaqDetail, meta: {layout : MainLayout}},// 동적 세그먼트를 포함하는 라우트 추가
     {path: '/test',name: 'Test',component: TestMain, meta: {layout : MainLayout}},
     {path: '/test/career',name: 'CareerTest',component: CareerTest, meta: {layout : MainLayout}},
     {path: '/test/person', name: 'PersonTest',component: PersonTest, meta: {layout : MainLayout}},
+    {path: '/regIntroduce', name: 'regIntroduce',component: regIntroduce, meta: {layout : MainLayout}},
+    {path: '/regCounselor', name: 'regCounselor',component: regCounselor, meta: {layout : MainLayout}},
 
 
 
@@ -168,6 +193,8 @@ const routes = [
     {path: '/secMenuTest', name: 'secMenuTest', component: secMenuTest, meta: { layout: MainLayout } },
     {path: '/applyForm3', name: 'applyForm3', component: applyForm3, meta: { layout: MainLayout } },
     {path: '/resultWrite', name: 'resultWrite', component: resultWrite, meta: { layout: MainLayout } },
+    {path: '/ProResult/:rsvno', name: 'ProResult', props: true, component: ProResult, meta: { layout: MainLayout } },
+    {path: '/ProResultUpdate/:rsvno', name: 'ProResultUpdate', props: true, component: ProResultUpdate, meta: { layout: MainLayout } },
     {path: '/ProResultWrite/:rsvno', name: 'ProResultWrite', props: true, component: ProResultWrite, meta: { layout: MainLayout } },
     {path: '/regResult', name: 'regResult', component: regResult, meta: { layout: MainLayout } },
     {path: '/jobs/apply', name: 'jobapply', component: jobapply, meta: { layout: MainLayout } },
