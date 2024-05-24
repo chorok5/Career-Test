@@ -1,17 +1,20 @@
 <template>
   <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block custom-sidebar">
-    <div class="py-4 rounded-top text-white pl-3 mb-0" style="background-color: midnightblue;">
+    <div class="py-4 rounded-top text-white pl-3 mb-0" style="background-color: #67BF4E;">
       <h4 class="mb-0" style="margin: 0;">메뉴</h4>
     </div>
     <div class="menu-items text-center justify-content-center  align-items-center">
       <div class="menu-item text-center">
         <router-link class="nav-link text-dark" :to="{ name: 'myinfo' }">나의 정보 관리</router-link>
       </div>
-      <div class="menu-item text-center">
+      <div class="menu-item text-center" v-if="grade>=2">
         <router-link class="nav-link text-dark" :to="{ name: 'myconsultations' }">나의 상담 내역</router-link>
       </div>
-      <div class="menu-item text-center">
+      <div class="menu-item text-center" v-if="grade<2">
         <router-link class="nav-link text-dark" :to="{ name: 'StudentConsultations' }">나의 상담 내역(학생용)</router-link>
+      </div>
+      <div class="menu-item text-center" v-if="id=='24102003'">
+        <router-link class="nav-link text-dark" :to="{ name: 'regRev' }">정기상담 관리</router-link>
       </div>
       <div class="menu-item text-center">
         <router-link class="nav-link text-dark" :to="{ name: 'mygroup' }">비교과(집단 상담)내역</router-link>
@@ -28,13 +31,34 @@
       <div class="menu-item text-center">
         <router-link class="nav-link text-dark" :to="{ name: 'myreviews' }">나의 리뷰</router-link>
       </div>
+      <div class="menu-item text-center" v-if="grade==3">
+        <router-link class="nav-link text-dark" :to="{ name: 'admin' }">관리자 페이지</router-link>
+      </div>
     </div>
   </nav>
 </template>
 
 <script>
+import axios from 'axios';
 export default {
-  name: 'Sidebar'
+  name: 'Sidebar',
+  data() {
+    return{
+      id:'',
+      grade:'',
+    }    
+  },
+  mounted(){
+    this.id = this.$store.state.account.id;
+    const params = new URLSearchParams();
+    params.append('id', this.$store.state.account.id);
+    axios.get('http://localhost:3000/memberDetail', {params: params}).then((res) => {      
+      this.grade = res.data[0].grade;
+    }).catch((err) => {
+      console.log(err);
+    })
+  }
+
 };
 </script>
 
