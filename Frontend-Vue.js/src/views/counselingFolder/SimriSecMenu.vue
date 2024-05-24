@@ -11,10 +11,10 @@
             <router-link :to="{ name: 'CounselorShow' }" class="router-link" @click="handleClick(1, 'CounselorShow', $event)">상담사 소개</router-link>
           </th>
           <th :style="select[2]">
-            <router-link :to="{ name: 'Test' }" class="router-link" @click="handleClick(2, 'Test', $event)">온라인 심리검사</router-link>
+            <router-link :to="{ name: 'PersonTest' }" class="router-link" @click="handleClick(3, 'PersonTest', $event)">오프라인 심리검사</router-link>
           </th>
           <th :style="select[3]">
-            <router-link :to="{ name: 'PersonTest' }" class="router-link" @click="handleClick(3, 'PersonTest', $event)">오프라인 심리검사</router-link>
+            <router-link :to="{ name: 'Test' }" class="router-link" @click="handleClick(2, 'Test', $event)">온라인 심리검사</router-link>
           </th>
         </tr>
       </table>
@@ -60,22 +60,23 @@ export default {
       const routeIndexMap = {
         'Counseling': 0,
         'CounselorShow': 1,
-        'Test': 2,
-        'PersonTest': 3,
+        'PersonTest': 2,
+        'Test': 3,
       };
       const index = routeIndexMap[routeName] || 0;
       this.cssAct = this.cssAct.map((style, i) => i === index ? { display: "block", backgroundColor: "#333", color: "#fff" } : { display: "none" });
-      this.select = this.select.map((style, i) => i === index ? { backgroundColor: "#58C495", color: "#fff" } : {});
+      this.select = this.select.map((style, i) => i === index ? { border: "2px solid #67BF4E", 'border-bottom':"none", color: "#67BF4E" } : {});
+      
     }
   }
 };
 </script>
 
-<style>
+<style scoped>
 .sbmContainer {
   width: 100%;
   margin-bottom: 50px;
-  border-bottom: 2px solid rgb(149, 248, 187);
+  /* border-bottom: 2px solid #67BF4E */
 }
 .subMenu {
   width: 100%;
@@ -86,7 +87,7 @@ export default {
 .subMenu tr th {
   width: 20%;
   height: 55px;
-  border-bottom: 2px solid rgb(121, 253, 172);
+  border-bottom: 2px solid #67BF4E;
   text-align: center;
 }
 .boundary {
@@ -94,7 +95,6 @@ export default {
   max-width: 1200px;
   margin: auto; 
   padding: 0 auto;
-  
 }
 .router-link {
   display: block;
