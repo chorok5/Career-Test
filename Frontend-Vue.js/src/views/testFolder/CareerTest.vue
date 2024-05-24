@@ -1,9 +1,10 @@
 <template>
   <div class="career-test">
     <MenuPage />
-  <div class="container my-5">
+  <div class="container boundary">
+    <h1 class="title">심리 상담</h1>
     <SimriSecMenu />
-    <h1 class="title-box text-center mt-5 mb-4" style="color:darkgreen; font-weight: bolder;">  🙋‍♀️ 직업 및 성향 심리검사 🙋‍♂️  </h1>
+    <h1 class="title-box text-center mt-5 mb-4" style="color:#2F9713; font-weight: bolder;">  🙋‍♀️ 직업 및 성향 심리검사 🙋‍♂️  </h1><br><br>
     <div v-for="(question, index) in questions" :key="question.qid" class="card mb-4 shadow-sm">
       <div class="card-body test-box" v-if="index !== 10">
         <h3 class="card-title" style="font-weight: bold;">{{ question.ttitle }}</h3>
@@ -236,8 +237,10 @@ export default {
 }
 
 .btn {
-  font-size: 1rem;
-  padding: 0.75rem 1.5rem;
+  font-size: 1.2rem;
+  background-color: #67BF4E;
+  border: #67BF4E;
+
 }
 // .title-box {
 //             background-color: #369f3a; /* 진한 배경색 (예: 어두운 회색) */
@@ -275,7 +278,7 @@ export default {
   background-color: hsl(210, 17%, 98%);
 }
 .radio-container:hover .custom-label {
-  background-color: #189521;
+  background-color: #67BF4E;
   color:white;
 }
 
