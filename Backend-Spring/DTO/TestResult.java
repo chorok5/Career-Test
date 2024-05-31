@@ -51,4 +51,60 @@ public class TestResult {
     @Column(name = "tdate")
     @Comment("검사 실시일")
     private LocalDateTime tdate;
+
+	public Integer getTno() {
+		return tno;
+	}
+
+	public void setTno(Integer tno) {
+		this.tno = tno;
+	}
+
+	public Integer getSid() {
+		return sid;
+	}
+
+	public void setSid(Integer sid) {
+		this.sid = sid;
+	}
+
+	public Integer getQid() {
+		return qid;
+	}
+
+	public void setQid(Integer qid) {
+		this.qid = qid;
+	}
+
+	public Integer getTanswer() {
+		return tanswer;
+	}
+
+	public void setTanswer(Integer tanswer) {
+		this.tanswer = tanswer;
+	}
+
+	public int getTotalScore() {
+		return totalScore;
+	}
+
+	public void setTotalScore(int totalScore) {
+		this.totalScore = totalScore;
+	}
+
+	public int getMemberId() {
+		return memberId;
+	}
+
+	public void setMemberId(int memberId) {
+		this.memberId = memberId;
+	}
+
+	public LocalDateTime getTdate() {
+		return tdate;
+	}
+
+	public void setTdate(LocalDateTime tdate) {
+		this.tdate = tdate;
+	}
 }
