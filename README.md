@@ -1,5 +1,7 @@
 ## [프로젝트] 대학 상담 솔루션 시스템
 
+[![Video Label](http://img.youtube.com/vi/KenYt3PLRZo/0.jpg)](https://www.youtube.com/watch?v=KenYt3PLRZo)
+
 ### 개요
 - 대학생을 대상으로 하는 종합 상담 시스템
 - 교수 상담, 취업 상담, 집단 상담, 심리 상담 중 <ins>심리 상담 구현 담당</ins>
