@@ -2,21 +2,10 @@
   <div>
     <MySidebar></MySidebar>
     <MenuPage/>
-    <div class="container-fluid mt-5 pt-4">
+    <div class="mainContainer">
   <div class="row">
-    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <main class="">
       <div class="main-content">
-        <div class="section">
-          <h1 class="mb-4">마이페이지입니다</h1>
-          <div>
-            <div class="mt-4">
-              <p>현재 로그인한 사용자 id: <strong>{{ $store.state.account.id }}</strong></p>
-              <p>현재 로그인한 사용자 email: <strong>{{ $store.state.account.email }}</strong></p>
-              <p>현재 로그인한 사용자 name: <strong>{{ $store.state.account.name }}</strong></p>
-            </div>
-          </div>
-        </div>
-        <hr>
         <div class="section">
           <div>
             <h2>비밀번호 수정</h2>
@@ -83,6 +72,10 @@ export default {
   },
   methods: {
     changePassword() {
+      if (!this.form.newPassword || !this.form.newPasswordCheck) {
+        window.alert("새 비밀번호를 입력해주세요.");
+        return;
+      }
       if (this.form.newPassword !== this.form.newPasswordCheck) {
         window.alert("새 비밀번호와 비밀번호 확인이 일치하지 않습니다.");
         return;
@@ -144,13 +137,18 @@ export default {
   display: inline-block;
   padding: 10px 20px;
   color: #fff;
-  background-color: #333;
+  background-color: #67bf4e;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   margin-top: 10px;
 }
 .btn.btn-change {
-  background-color: #555;
+  background-color: #67bf4e;
+}
+.mainContainer{
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 </style>

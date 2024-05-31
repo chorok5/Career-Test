@@ -2,15 +2,15 @@
   <div>
         <MySidebar></MySidebar>
     <MenuPage/>
-    <div class="container-fluid mt-5 pt-4">
+    <div class="mainContainer">
       <div class="row">
-        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-          <h1> 아래는 예시입니다. 수정 필수! </h1><br><hr>
-          <h1 class="mb-4">나의 리뷰</h1>
+        <main class="">
+          <h2 class="mb-4 title">나의 리뷰</h2>
+          <hr class="line">
           <div class="mt-4">
             <table class="table table-striped">
               <thead>
-                <tr>
+                <tr class="tr">
                   <th scope="col">리뷰 제목</th>
                   <th scope="col">작성 날짜</th>
                   <th scope="col">리뷰 상태</th>
@@ -75,5 +75,20 @@ export default {
 }
 .table {
   margin-top: 20px;
+}
+.line{
+  width: 40%;  
+}
+.title{
+  text-align: left;
+  font-family: 'sj';
+}
+.mainContainer{
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.tr{
+  font-family: 'sjl';
 }
 </style>

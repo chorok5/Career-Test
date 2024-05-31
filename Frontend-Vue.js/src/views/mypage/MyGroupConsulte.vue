@@ -2,15 +2,15 @@
   <div>
         <MySidebar></MySidebar>
     <HeaderMenu></HeaderMenu>
-    <div class="container-fluid mt-5 pt-4">
+    <div class="mainContainer">
       <div class="row">
-        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-          <h1> 아래는 예시입니다. 수정 필수! </h1><br><hr>
-          <h1 class="mb-4">비교과(집단 상담) 내역</h1>
+        <main class="">
+          <h2 class="mb-4 title">비교과(집단 상담) 내역</h2>
+          <hr class="line">
           <div class="mt-4">
             <table class="table table-striped">
               <thead>
-                <tr>
+                <tr class="tr">
                   <th scope="col">상담 제목</th>
                   <th scope="col">상담 날짜</th>
                   <th scope="col">상담 상태</th>
@@ -69,11 +69,26 @@ export default {
 }
 </script>
 
-<style >
+<style scoped>
 .container-fluid {
   padding-top: 56px; 
 }
 .table {
   margin-top: 20px;
+}
+.line{
+  width: 40%;  
+}
+.title{
+  text-align: left;
+  font-family: 'sj';
+}
+.mainContainer{
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.tr{
+  font-family: 'sjl';
 }
 </style>
