@@ -1,15 +1,15 @@
 ## [프로젝트] 대학 상담 솔루션 시스템
 
-#### 📽 소개 영상 📽
+#### 🔊 소개 영상
 [![Video Label](http://img.youtube.com/vi/KenYt3PLRZo/0.jpg)](https://www.youtube.com/watch?v=KenYt3PLRZo)
 
-### 개요
+### ✔ 개요
 - 대학생을 대상으로 하는 종합 상담 시스템
 - 교수 상담, 취업 상담, 집단 상담, 심리 상담 중 <ins>심리 상담 구현 담당</ins>
 - 총 5팀 중 1위를 차지해 **대상** 수상
 - 주요 기술 : Vue.js, Spring boot, JPA, MariaDB
 
-### 담당 업무
+### ✔ 담당 업무
 - 온라인 심리검사 문항 및 결과 설계
 - CRUD 기능을 위한 게시판 RESTful API 구현
 - 마이페이지 DB 연동 및 UI, Modal 구현
@@ -17,11 +17,11 @@
 - 카카오맵 API를 이용한 지도 구현
 - 최신 취업 정보를 자동으로 수집하고 정제하는 웹 크롤러 기능 구현
 
-#### 비기술적 기여
+#### 💡 비기술적 기여
 - 프레젠테이션 자료 제작
 - 프로젝트 소개 및 데모 영상을 편집하여 최종 제출물로 사용 (https://youtu.be/KenYt3PLRZo?si=Cw5v6rE-VefPzTGm)
 
-### 특징
+### ✔ 특징
 - 온라인으로 직업 심리 검사를 실시할 수 있음.
 - 검사 결과에 따른 추천 직업과 성향에 대해 알 수 있음.
 - 온라인 심리검사에 대한 접근 제한 : 로그인 필수
@@ -32,7 +32,7 @@
 - 취업정보 페이지에서 인크루트의 최신 취업정보를 확인할 수 있음.
 
 
-### 기술 스택
+### ✔ 기술 스택
 <div style="display: flex; flex-wrap: wrap;">
   <img src="https://img.shields.io/badge/JAVA-3766AB?style=flat-square&logo=java&logoColor=black">
   <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black">
@@ -61,10 +61,13 @@
 <br>
 
 ---
-#### 스크린샷
+### 📄 스크린샷
 <img src="https://github.com/chorok5/Career-Test/assets/157563710/5128d183-d43e-4c0d-abed-5f7b7374c195" width="700"/><br><br>
 <img src="https://github.com/chorok5/Career-Test/assets/157563710/554f6891-6897-4ad3-9f63-d0f1978b5fa4" width="700"/><br><br>
 <img src="https://github.com/chorok5/Career-Test/assets/157563710/e4a598ed-ab44-4018-a804-f8a17f1e46c5" width="700"/><br><br>
+<img src="https://github.com/chorok5/Career-Test/assets/157563710/885fda25-7988-4f37-8421-f1aae4975b52" width="700"/><br><br>
+<img src="https://github.com/chorok5/Career-Test/assets/157563710/555d3fa4-1547-4e84-9b92-2602c484212e" width="700"/>
+
 ---
 
 ### axios 에러 ☹
