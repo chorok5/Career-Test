@@ -14,7 +14,7 @@ import lombok.Data;
 
 
 public class TestAnswer {
-	@Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long tid;
 
