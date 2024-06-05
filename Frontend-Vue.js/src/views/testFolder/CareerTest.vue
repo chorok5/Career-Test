@@ -176,9 +176,6 @@ export default {
     },
 
     submitTest() {
-      console.log(this.userAnswers);
-      console.log('네비게이션 전에 로그 출력');
-
       const isAllAnswered = Object.keys(this.userAnswers).length === this.questions.length;
       if (!isAllAnswered) {
         alert("모든 질문에 답해주세요.");
@@ -190,13 +187,10 @@ export default {
         return parseInt(this.userAnswers[question.qid]);
       })
 
-      console.log('test page 전송하는 데이터:', userAnswersArray);
-
       axios.post('http://localhost:3000/api/submitTest', {
         userAnswersArray: userAnswersArray,
         totalScore: userAnswersArray.reduce((acc, cur) => acc + cur, 0)}, { withCredentials: true }) // id값 받아오게?
         .then(response => {
-          console.log('성공적으로 제출됨:', response.data);
           const { totalScore, recommendedJobs, personalTraits } = response.data;
 
           this.result.totalScore = totalScore;
@@ -242,15 +236,6 @@ export default {
   border: #67BF4E;
 
 }
-// .title-box {
-//             background-color: #369f3a; /* 진한 배경색 (예: 어두운 회색) */
-//             color: #ffffff; /* 글자색 흰색 */
-//             padding: 10px;
-//             text-align: center;
-//             margin: 50px auto 40px; /* 위쪽과 아래쪽 간격 조정 */
-//             border-radius: 3px; /* 모서리 둥글게 */
-//             width: fit-content;
-//         }
 .test-box {
   // background: linear-gradient(180deg, rgb(243, 250, 245), #fffeff);
   border-left: 4px solid #2fbb6e;
