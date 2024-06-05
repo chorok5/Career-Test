@@ -16,13 +16,14 @@ import lombok.Data;
 @Entity
 @Table(name = "faq_question")
 public class FaqQuestion {
-	@Id
+    
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "question_id")
     private Long id;
-	
-	@Column(name="writer")
-	private String writer;
+    
+    @Column(name="writer")
+    private String writer;
 	
     @Column(nullable = false)
     private String title;
@@ -79,16 +80,9 @@ public class FaqQuestion {
 		this.date = date;
 	}
 
-
-    
     public void setNumber(Long number) {
         this.id = number;
     }
-    
-//    public void setQuestionId(Long questionId) {
-//        this.id = questionId;
-//      }
-
 }
 
 
