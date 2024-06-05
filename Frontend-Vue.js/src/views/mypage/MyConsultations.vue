@@ -1,6 +1,6 @@
- <template>
+<template>
   <div>
-        <MySidebar></MySidebar>
+    <MySidebar></MySidebar>
     <MenuPage />
     <div class="mainContainer boundary">
       <div class="row">
@@ -10,12 +10,12 @@
           <div class="mt-4">
             <table class="table">
               <thead>
-                <tr class="tr">     
+                <tr class="tr">
                   <th>상담 예약일</th>
-                  <th>상담 희망시간</th>             
+                  <th>상담 희망시간</th>
                   <th>상담 종류</th>
                   <th>신청자 이름</th>
-                  <th>신청자 학번</th>                  
+                  <th>신청자 학번</th>
                   <th>상담 일지</th>
                 </tr>
               </thead>
@@ -83,30 +83,38 @@ export default {
 .container-fluid {
   padding-top: 56px;
 }
+
 .table {
   margin-top: 20px;
 }
+
 .line {
   width: 40%;
 }
+
 .title {
   text-align: left;
   font-family: 'sj';
 }
+
 .tr {
   font-family: 'sjl';
 }
+
 table thead :hover {
   background-color: inherit !important;
 }
+
 table {
   text-align: center;
 }
+
 .done {
   color: black;
   background-color: white;
   border: 1px solid #c0c0c0;
 }
+
 .btn-view {
   background-color: rgb(155, 155, 175);
   color: white;
@@ -114,6 +122,7 @@ table {
   padding: 10px 20px;
   border-radius: 5px;
 }
+
 .btn-write {
   background-color: green;
   color: white;
@@ -121,7 +130,8 @@ table {
   padding: 10px 20px;
   border-radius: 5px;
 }
+
 .mainContainer {
-  padding-left: 20px; /* Add padding to the left to create space between sidebar and main content */
+  padding-left: 20px;
 }
 </style>
