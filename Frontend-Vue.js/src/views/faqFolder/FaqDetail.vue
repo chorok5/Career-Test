@@ -3,12 +3,13 @@
     <div class="card">
       <div class="card-header">
         <h2 class="card-title">{{ question.title }}</h2>
-        
       </div>
       <div class="card-body">
         <p class="card-text">내용: {{ question.content }}</p>
         <p class="card-text">작성자: {{ question.writer }}</p>
-        <p class="card-text">날짜: {{ new Date(question.date).toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }) }}</p>
+        <p class="card-text">날짜: {{ new Date(question.date).toLocaleDateString('ko-KR', {
+          year: 'numeric', month:
+            '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }) }}</p>
       </div>
       <div class="card-footer">
         <div class="d-flex justify-content-end">
@@ -26,8 +27,6 @@
     </div>
   </div>
 </template>
-
-
 
 <script>
 import axios from 'axios';
@@ -54,7 +53,7 @@ export default {
         });
     },
     startUpdate() {
-        this.isUpdating = true;
+      this.isUpdating = true;
     },
     cancelUpdate() {
       this.isUpdating = false;
@@ -62,36 +61,36 @@ export default {
     },
     updateQuestion() {
       if (confirm('수정하시겠습니까?')) {
-      const questionId = this.$route.params.id;
-      axios.put(`http://localhost:3000/api/faqquestions/${questionId}`, this.question)
-        .then(() => {
-          console.log('Question updated successfully');
-          this.isUpdating = false;
-        })
-        .catch(error => {
-          console.error('Error updating question:', error);
-        });
+        const questionId = this.$route.params.id;
+        axios.put(`http://localhost:3000/api/faqquestions/${questionId}`, this.question)
+          .then(() => {
+            console.log('Question updated successfully');
+            this.isUpdating = false;
+          })
+          .catch(error => {
+            console.error('Error updating question:', error);
+          });
       }
     },
     deleteQuestion() {
       if (confirm('정말 삭제하시겠습니까?')) {
-      const questionId = this.$route.params.id;
-      axios.delete(`http://localhost:3000/api/faqquestions/${questionId}`)
-        .then(() => {
-          console.log('Question deleted successfully');
-          this.$router.push('/faq');
-        })
-        .catch(error => {
-          console.error('Error deleting question:', error);
-        });
+        const questionId = this.$route.params.id;
+        axios.delete(`http://localhost:3000/api/faqquestions/${questionId}`)
+          .then(() => {
+            console.log('Question deleted successfully');
+            this.$router.push('/faq');
+          })
+          .catch(error => {
+            console.error('Error deleting question:', error);
+          });
+      }
+    },
+    goBack() {
+      this.$router.go(-1); // 이전 페이지로 이동
     }
-  },
-  goBack() {
-    this.$router.go(-1); // 이전 페이지로 이동
   }
 }
-}
 </script>
-<style scoped>
 
+<style scoped>
 </style>
