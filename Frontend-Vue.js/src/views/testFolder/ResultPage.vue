@@ -6,41 +6,33 @@
         <h2 class="mb-2 text-center text-primary">{{ result.title }}</h2>
         <h3 class="mb-3 text-center text-muted">{{ result.description }}</h3>
         <p class="mb-2 text-center" style="font-size: 18px;">
-  총점: <span class="badge badge-info" style="color:cadetblue; font-size: 18px;">{{ result.totalScore }} / 30</span>
-</p></div>
-<br>
+          총점: <span class="badge badge-info" style="color:cadetblue; font-size: 18px;">{{ result.totalScore }} /30</span>
+        </p>
+      </div>
+      <br>
       <h3 class="mb-3 title-highlight text-center">추천 직업</h3>
       <div class="row flex-nowrap flex-wrap justify-content-center">
-        <div 
-          class="col-md-2 mb-2 recommended-job d-flex align-items-center justify-content-center" 
-          v-for="job in result.recommendedJobs.split(',')" 
-          :key="job.trim()"
-          style="margin-right: 10px;"
-        >
+        <div class="col-md-2 mb-2 recommended-job d-flex align-items-center justify-content-center"
+          v-for="job in result.recommendedJobs.split(',')" :key="job.trim()" style="margin-right: 10px;">
           <p class="mb-0">{{ job.trim() }}</p>
         </div>
       </div>
-<br><br>
+      <br><br>
       <h3 class="mb-3 title-highlight text-center">당신의 성향</h3>
       <div class="row">
-        <div 
-          class="col-md-4 mb-3" 
-          v-for="(trait, index) in result.personalTraits" 
-          :key="index"
-        >
+        <div class="col-md-4 mb-3" v-for="(trait, index) in result.personalTraits" :key="index">
           <div class="trait-card h-100">
             <div class="card-body">
               <h5 class="card-title">{{ traitTitles[index] }}</h5><br>
-        <ul class="card-text" style="text-align: left;">
-          <li v-for="(item, i) in trait.split(',')" :key="i" style="margin-left: 10px;">
-            {{ item.trim() }}
-          </li>
-        </ul>
+              <ul class="card-text" style="text-align: left;">
+                <li v-for="(item, i) in trait.split(',')" :key="i" style="margin-left: 10px;">
+                  {{ item.trim() }}
+                </li>
+              </ul>
             </div>
           </div>
         </div>
       </div>
-
       <div class="text-center mt-4">
         <button class="btn btn-primary" @click="retakeTest">다시 검사하기</button>
       </div>
@@ -75,13 +67,11 @@ export default {
 
   methods: {
     fetchTestResult(answers) {
-      console.log('result page 전송하는 데이터:', answers);
       const answersArray = Object.values(answers).map(answer => parseInt(answer));
 
       axios.post('http://localhost:3000/api/getTestResult', answersArray)
         .then(response => {
           if (!response.data || !response.data.totalScore) {
-            console.error('Invalid response data:', response.data);
             alert('잘못된 결과 데이터를 받았습니다. 관리자에게 문의하세요.');
             return;
           }
@@ -92,7 +82,6 @@ export default {
           this.result.personalTraits = response.data.personalTraits;
         })
         .catch(error => {
-          console.error('Error fetching test result:', error);
           alert('결과를 불러오는 데 실패했습니다. 다시 시도해주세요.');
         });
     },
@@ -120,11 +109,14 @@ export default {
   padding: 15px;
   margin-bottom: 20px;
   text-align: center;
-  border-radius: 50px; /* 원형 모양으로 변경 */
+  border-radius: 50px;
+  /* 원형 모양으로 변경 */
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
   transition: transform 0.2s;
-  font-weight: bold; /* 글자 두껍게 */
-  text-transform: uppercase; /* 모든 글자 대문자로 */
+  font-weight: bold;
+  /* 글자 두껍게 */
+  text-transform: uppercase;
+  /* 모든 글자 대문자로 */
 }
 
 .recommended-job:hover {
