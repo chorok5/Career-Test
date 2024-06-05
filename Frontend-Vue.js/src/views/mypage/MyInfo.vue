@@ -1,51 +1,53 @@
 <template>
   <div>
     <MySidebar></MySidebar>
-    <MenuPage/>
+    <MenuPage />
     <div class="mainContainer">
-  <div class="row">
-    <main class="">
-      <div class="main-content">
-        <div class="section">
-          <div>
-            <h2>비밀번호 수정</h2>
-            <p class="note">변경된 개인 정보를 정확히 입력해주시기 바랍니다</p>
-            <p class="note">이름 및 휴대폰 번호가 변경된 경우는 상담센터에 문의해주세요</p>
-            <form class="info-form">
-              <div class="form-group">
-                <label for="name">이름*</label>
-                <span class="text-value">{{ $store.state.account.name }}</span>
+      <div class="row">
+        <main class="">
+          <div class="main-content">
+            <div class="section">
+              <div>
+                <h2>비밀번호 수정</h2>
+                <p class="note">변경된 개인 정보를 정확히 입력해주시기 바랍니다</p>
+                <p class="note">이름 및 휴대폰 번호가 변경된 경우는 상담센터에 문의해주세요</p>
+                <form class="info-form">
+                  <div class="form-group">
+                    <label for="name">이름*</label>
+                    <span class="text-value">{{ $store.state.account.name }}</span>
+                  </div>
+                  <hr>
+                  <div class="form-group">
+                    <label for="id">아이디(학번)*</label>
+                    <span class="text-value">{{ $store.state.account.id }}</span>
+                  </div>
+                  <hr>
+                  <div class="form-group">
+                    <label for="phone">휴대폰 번호*</label>
+                    <span class="text-value">{{ $store.state.account.email }}</span>
+                  </div>
+                  <hr>
+                  <div class="form-group">
+                    <label for="password">새 비밀번호*</label>
+                    <input type="password" @keyup.enter="changePassword" v-model="form.newPassword"
+                      placeholder="새 비밀번호" />
+                  </div>
+                  <hr>
+                  <div class="form-group">
+                    <label for="confirm-password">비밀번호 확인*</label>
+                    <input type="password" @keyup.enter="changePassword" v-model="form.newPasswordCheck"
+                      placeholder="새 비밀번호 확인" />
+                  </div>
+                  <hr>
+                  <button type="button" class="btn btn-change" @click="changePassword">변경</button>
+                </form>
               </div>
-              <hr>
-              <div class="form-group">
-                <label for="id">아이디(학번)*</label>
-                <span class="text-value">{{ $store.state.account.id }}</span>
-              </div>
-              <hr>
-              <div class="form-group">
-                <label for="phone">휴대폰 번호*</label>
-                <span class="text-value">{{ $store.state.account.email }}</span>
-              </div>
-              <hr>
-              <div class="form-group">
-                <label for="password">새 비밀번호*</label>
-                <input type="password" @keyup.enter="changePassword" v-model="form.newPassword" placeholder="새 비밀번호" />
-              </div>
-              <hr>
-              <div class="form-group">
-                <label for="confirm-password">비밀번호 확인*</label>
-                <input type="password" @keyup.enter="changePassword" v-model="form.newPasswordCheck" placeholder="새 비밀번호 확인" />
-              </div>
-              <hr>
-              <button type="button" class="btn btn-change" @click="changePassword">변경</button>
-            </form>
+            </div>
           </div>
-        </div>
+        </main>
       </div>
-    </main>
+    </div>
   </div>
-</div>
-</div>
 
 </template>
 
@@ -99,40 +101,52 @@ export default {
   border: 1px solid #ccc;
   padding: 20px;
   border-radius: 8px;
-  max-width: 1000px; /* 페이지 양쪽 맞춤을 위해 너비 제한 */
-  margin: 0 auto; /* 가운데 정렬 */
+  max-width: 1000px;
+  /* 페이지 양쪽 맞춤을 위해 너비 제한 */
+  margin: 0 auto;
+  /* 가운데 정렬 */
 }
+
 .note {
   margin-bottom: 10px;
   font-size: 14px;
   color: #666;
 }
+
 .info-form {
   margin-top: 20px;
 }
+
 .form-group {
   display: flex;
   align-items: center;
   margin-bottom: 15px;
 }
+
 .form-group label {
   flex: 1;
   font-weight: bold;
-  text-align: left; /* 글씨 왼쪽 정렬 */
+  text-align: left;
+  /* 글씨 왼쪽 정렬 */
 }
+
 .form-group .text-value {
   flex: 2;
   padding: 8px;
-  text-align: left; /* 글씨 왼쪽 정렬 */
+  text-align: left;
+  /* 글씨 왼쪽 정렬 */
 }
+
 .form-group input {
-  flex: 2; /* 레이블과 동일한 너비 비율 적용 */
+  flex: 2;
+  /* 레이블과 동일한 너비 비율 적용 */
   width: 100%;
   padding: 8px;
   box-sizing: border-box;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
+
 .btn {
   display: inline-block;
   padding: 10px 20px;
@@ -143,10 +157,12 @@ export default {
   cursor: pointer;
   margin-top: 10px;
 }
+
 .btn.btn-change {
   background-color: #67bf4e;
 }
-.mainContainer{
+
+.mainContainer {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
