@@ -28,7 +28,6 @@
                     </tr>
                   </tbody>
                 </table>
-
                 <div v-if="recommendedJobs" class="mt-4">
                   <h5><strong>추천 직업</strong></h5><br>
                   <p class="lead"><mark class="mark-bg">{{ recommendedJobs }}</mark></p>
@@ -47,17 +46,15 @@
                     </div>
                   </div>
                 </ul>
-
               </div>
             </div>
           </div>
-
 
           <div class="col-md-2 history">
             <div v-if="previousResults.length" class="card mt-4">
               <div class="card-header bg-secondary text-white">
                 <h4 class="m-0">검사 기록</h4>
-                            </div>
+              </div>
               <p style="font-size: 15px; margin:0;">과거 기록은 3건까지만<br>조회가 가능합니다.</p>
               <hr />
               <div class="card-body history-card" style="margin: 0;">
@@ -108,7 +105,6 @@
           </div>
         </div>
       </div>
-
       <!-- 테스트 결과 로딩 중인 경우 표시할 메시지 -->
       <div v-if="isLoading" class="alert alert-info mt-4">
         <p>테스트 결과를 불러오는 중... (기록없음)</p>
@@ -143,13 +139,10 @@ export default {
 
     const loadTestResult = () => {
       isLoading.value = true;
-      console.log('loadTestResult 호출됨'); // 요청 전 로그
       axios.get('http://localhost:3000/api/mysimri', { withCredentials: true })
         .then(response => {
-          console.log('응답 받음:', response); // 응답 후 로그
           if (response.data) {
             testResult.value = response.data;
-            console.log('Test Result:', testResult.value); // 디버깅용 로그
             loadRecommendations(response.data.totalScore);
           }
           isLoading.value = false;
@@ -208,8 +201,8 @@ export default {
       try {
         const response = await axios.get(`http://localhost:3000/api/mysimri/recommendations?totalScore=${totalScore}`);
         if (response.data) {
-          modalRecommendedJobs.value = response.data.recommendedJobs; // 서버에서 반환되는 데이터 타입에 따라 수정 필요
-          modalPersonalTraits.value = response.data.personalTraits; // 서버에서 반환되는 데이터 타입에 따라 수정 필요
+          modalRecommendedJobs.value = response.data.recommendedJobs; 
+          modalPersonalTraits.value = response.data.personalTraits; 
         }
       } catch (error) {
         console.log('에러 히어~ : ', error);
