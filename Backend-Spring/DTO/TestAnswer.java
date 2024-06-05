@@ -19,25 +19,25 @@ import lombok.Data;
 @Table(name = "test_answer")
 @Comment("심리검사 선택한 답변")
 public class TestAnswer {
-	
-	// @Id를 붙여주면 기본 키 -> @Id가 2개면 복합 키로 저장됨!!
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
 
-	@Column(name = "sid", nullable = false)
-    private Integer sid =1;
+    // @Id를 붙여주면 기본 키 -> @Id가 2개면 복합 키로 저장됨!!
 
-	@Column(name="qid", nullable=true)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "sid", nullable = false)
+    private Integer sid = 1;
+
+    @Column(name = "qid", nullable = true)
     @Comment("질문 id")
     private Integer qid;
 
-	@Column(name = "tanswer")
-	@Comment("선택한 답변")
-	private String tanswer;
+    @Column(name = "tanswer")
+    @Comment("선택한 답변")
+    private String tanswer;
 
-	@Column(name = "tdate")
-	@Comment("검사 실시일")
-	private LocalDateTime tdate;
+    @Column(name = "tdate")
+    @Comment("검사 실시일")
+    private LocalDateTime tdate;
 }
