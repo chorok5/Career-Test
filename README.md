@@ -61,7 +61,7 @@
 <br>
 
 ---
-### 📄 스크린샷
+### 📸 스크린샷 📸
 <img src="https://github.com/chorok5/Career-Test/assets/157563710/5128d183-d43e-4c0d-abed-5f7b7374c195" width="700"/><br><br>
 <img src="https://github.com/chorok5/Career-Test/assets/157563710/554f6891-6897-4ad3-9f63-d0f1978b5fa4" width="700"/><br><br>
 <img src="https://github.com/chorok5/Career-Test/assets/157563710/e4a598ed-ab44-4018-a804-f8a17f1e46c5" width="700"/><br><br>
