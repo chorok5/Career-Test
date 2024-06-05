@@ -1,7 +1,7 @@
 <template>
   <div>
-        <MySidebar></MySidebar>
-    <MenuPage/>
+    <MySidebar></MySidebar>
+    <MenuPage />
     <div class="mainContainer">
       <div class="row">
         <main class="">
@@ -77,19 +77,23 @@ export default {
 .table {
   margin-top: 20px;
 }
-.line{
-  width: 40%;  
+
+.line {
+  width: 40%;
 }
-.title{
+
+.title {
   text-align: left;
   font-family: 'sj';
 }
-.mainContainer{
+
+.mainContainer {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
 }
-.tr{
+
+.tr {
   font-family: 'sjl';
 }
 </style>
