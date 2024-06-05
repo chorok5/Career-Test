@@ -20,7 +20,8 @@
     </table>
     <div class="d-flex justify-content-between align-items-center my-4">
       <div>
-        <button @click="previousPage" :disabled="currentPage === 0" class="btn btn-outline-primary custom-outline-btn mr-3">
+        <button @click="previousPage" :disabled="currentPage === 0"
+          class="btn btn-outline-primary custom-outline-btn mr-3">
           <i class="bi bi-chevron-left"></i> Page {{ currentPage + 1 }}
         </button>
       </div>
@@ -28,7 +29,7 @@
         <button v-if="isAdmin" class="btn btn-success" style="background-color: #67BF4E;" @click="faqwrite">등록</button>
       </div>
       <div>
-        <button @click="nextPage" :disabled="!hasMore"  class="btn btn-outline-primary custom-outline-btn ml-3">
+        <button @click="nextPage" :disabled="!hasMore" class="btn btn-outline-primary custom-outline-btn ml-3">
           Page {{ currentPage + 2 }} <i class="bi bi-chevron-right"></i>
         </button>
       </div>
@@ -74,7 +75,7 @@ export default {
               hour: '2-digit',
               minute: '2-digit'
             })
-            
+
           })).reverse(); // 데이터를 역순으로 정렬합니다.
           this.hasMore = response.data.length === this.pageSize;
         })
@@ -112,27 +113,30 @@ export default {
 .table-title {
   background-color: #67BF4E;
 }
+
 .table-title:hover {
   background-color: #67BF4E;
 }
-.btn{
+
+.btn {
   border-color: #67BF4E !important;
   color: white;
 
 }
+
 .custom-outline-btn {
   border-color: #67BF4E !important;
   color: #67BF4E;
 }
+
 .custom-outline-btn:hover {
-  background-color: #67BF4E !important; 
-  border-color: #67BF4E !important; 
-  color: white !important; 
+  background-color: #67BF4E !important;
+  border-color: #67BF4E !important;
+  color: white !important;
 }
+
 .custom-outline-btn:disabled {
   border-color: #dcdcdc !important;
   color: #dcdcdc;
 }
-
-
 </style>
