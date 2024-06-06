@@ -1,4 +1,4 @@
-## [프로젝트] 대학 상담 솔루션 시스템
+## [기업 프로젝트] 대학 상담 솔루션 시스템
 
 #### 🔊 소개 영상
 [![Video Label](http://img.youtube.com/vi/KenYt3PLRZo/0.jpg)](https://www.youtube.com/watch?v=KenYt3PLRZo)
